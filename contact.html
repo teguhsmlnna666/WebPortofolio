@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact - teguhsmlnna</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top bg-dark text-light">
+      <div class="container">
+        <a class="navbar-brand fw-bold">teguhsmlnna</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto fw-bold">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="portofolio.html">Portofolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- contact form -->
+    <section id="contact" class="mt-5 pt-3">
+      <div class="container mt-2 p-3 rounded-4 shadow">
+        <div class="row">
+          <h3 class="fw-bold mb-2 pb-2 text-center">Contact Me</h3>
+          <div class="col-md-6 text-center mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+              <path
+                fill="#000000"
+                fill-rule="evenodd"
+                d="M14 7c0-1.006-.109-1.983-.232-2.91v-.002c-.106-.773-.517-1.472-1.135-1.991c-.616-.518-1.407-.834-2.24-.914h-.003C9.3 1.085 8.165 1 7 1s-2.3.085-3.39.183h-.003c-.833.08-1.624.396-2.24.914C.749 2.617.338 3.315.232 4.088v.003C.109 5.018 0 5.994 0 7s.109 1.983.232 2.91v.002c.106.773.517 1.472 1.135 1.991c.616.518 1.407.834 2.24.914h.003C4.7 12.915 5.836 13 7 13s2.3-.085 3.39-.183h.004c.833-.08 1.624-.396 2.24-.914c.618-.52 1.029-1.218 1.135-1.991v-.004C13.89 8.983 14 8.006 14 7m-1.553-3.08q.06.167.082.337c.122.912.221 1.823.221 2.743s-.1 1.83-.22 2.744c-.06.435-.296.863-.7 1.203a2.84 2.84 0 0 1-1.554.625c-1.08.098-2.17.178-3.276.178s-2.197-.08-3.275-.178a2.84 2.84 0 0 1-1.554-.625c-.404-.34-.64-.768-.7-1.204C1.349 8.831 1.25 7.92 1.25 7s.1-1.83.22-2.743q.024-.17.083-.337a37 37 0 0 0 3.64 2.878a3.19 3.19 0 0 0 3.614 0a37 37 0 0 0 3.64-2.878"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="col-md-6">
+            <div class="alert alert-success d-none" id="successAlert">Pesanmu Terkirim!</div>
+            <div class="alert alert-danger d-none" id="errorAlert">Ada kesalahan, coba lagi ya...</div>
+            <form id="contactForm" class="needs-validation" novalidate>
+              <div class="mb-2">
+                <label class="form-label">Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm rounded-pill bg-light" required />
+                <div class="invalid-feedback">Isikan nama</div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control form-control-sm rounded-pill bg-light" required />
+                <div class="invalid-feedback">Pake email yang valid</div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Phone <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control form-control-sm rounded-pill bg-light" pattern="[0-9+ ]+" required />
+                <div class="invalid-feedback">Isikan nomor telepon</div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Subject <span class="text-danger">*</span></label>
+                <select class="form-select form-select-sm rounded-pill bg-light" required>
+                  <option value="" selected disabled>Select a subject</option>
+                  <option>General Inquiry</option>
+                  <option>Feedback</option>
+                  <option>Work Proposal</option>
+                  <option>Partnership</option>
+                </select>
+                <div class="invalid-feedback">Isikan subjek pesanmu</div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Message <span class="text-danger">*</span></label>
+                <textarea rows="3" class="form-control bg-light rounded-4" required></textarea>
+                <div class="invalid-feedback">Pesan tidak boleh kosong</div>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="termsCheck" required />
+                <label class="form-check-label small" for="termsCheck"> I agree to terms & conditions <span class="text-danger">*</span> </label>
+              </div>
+              <div class="text-center">
+                <button id="submitBtn" class="btn btn-md rounded-pill px-5" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- info -->
+    <div class="container rounded-4 shadow mt-5 p-4 mb-5">
+      <h4 class="fw-bold mb-3">Contact Information</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            <strong>Address:</strong><br />
+            Padang, Sumatera Barat.
+          </p>
+          <p>
+            <strong>Phone:</strong><br />
+            <p>+62 821-8176-9253</p>
+          </p>
+          <p>
+            <strong>Email:</strong><br />
+            <p>teguhesamaulanna665@gmail.com</p>
+          </p>
+          <p>
+            <strong>Social Media:</strong><br />
+            <a href="https://www.instagram.com/teguhsmlnna/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d74219.71786090263!2d100.36889607899919!3d-0.9174190357175571!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b942e2b117bb%3A0xb8468cb5c3046ba5!2sPadang%2C%20Kota%20Padang%2C%20Sumatera%20Barat!5e0!3m2!1sid!2sid!4v1765456632404!5m2!1sid!2sid"
+            width="100%"
+            height="250"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="bg-dark text-white pt-5 pb-3 mt-5">
+      <div class="container text-center">
+        <h4 class="fw-bold mb-4">teguhsmlnna</h4>
+        <ul class="list-unstyled d-flex justify-content-center gap-4 mb-4">
+          <li><a href="index.html" class="text-white text-decoration-none">HOME</a></li>
+          <li><a href="about.html" class="text-white text-decoration-none">ABOUT</a></li>
+          <li><a href="portofolio.html" class="text-white text-decoration-none">PORTFOLIO</a></li>
+          <li><a href="contact.html" class="text-white text-decoration-none">CONTACT</a></li>
+        </ul>
+        <div class="d-flex gap-3 fs-4 justify-content-center mb-4">
+          <a href="https://www.instagram.com/teguhsmlnna/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-instagram fs-2"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/teguh-esa-maulanna-83820531b/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-linkedin fs-2"></i>
+          </a>
+          <a href="https://github.com/teguhsmlnna666" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github fs-2"></i>
+          </a>
+        </div>
+        <hr class="border-light" />
+        <p class="small mb-0">&copy; 2025 teguhsmlnna. All rights reserved</p>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>

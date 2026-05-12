@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio - teguhsmlnna</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="Style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top bg-dark text-light">
+      <div class="container">
+        <a class="navbar-brand fw-bold">teguhsmlnna</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto fw-bold">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="portofolio.html">Portofolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- portofolio -->
+    <section id="portfolio" class="mt-5 p-4">
+      <div class="container rounded-4 shadow mt-4 p-4 mb-5">
+        <h2 class="fw-bold text-center mb-4">Project Galeria</h2>
+        <!-- filter -->
+        <ul class="nav nav-pills justify-content-center mb-4" id="portfolio-filters">
+          <li class="nav-item">
+            <button class="nav-link active" data-filter="all">All</button>
+          </li>
+          <li class="nav-item bg">
+            <button class="nav-link" data-filter="web">Web</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-filter="mobile">Mobile</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-filter="java">Java</button>
+          </li>
+        </ul>
+        <div class="row g-4">
+          <!-- Item 1 -->
+          <div class="col-md-4 portfolio-item" data-category="web">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal1" style="cursor: pointer">
+              <img src="images/project1-1.png" class="card-img-top" alt="project1" />
+              <div class="card-body">
+                <h5 class="card-title">Simple Portofolio Website</h5>
+                <p class="card-text">Website Portofolio sederhana yang dibuat menggunakan framework bootstrap 5.</p>
+                <span class="badge bg-primary">Web</span>
+              </div>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="col-md-4 portfolio-item" data-category="java">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal2" style="cursor: pointer">
+              <img src="images/project2-1.png" class="card-img-top" alt="project2" />
+              <div class="card-body">
+                <h5 class="card-title">Java Programming</h5>
+                <p class="card-text">Aplikasi Laundry Berbasis Java</p>
+                <span class="badge bg-danger">Java</span>
+              </div>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="col-md-4 portfolio-item" data-category="java">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal3" style="cursor: pointer">
+              <img src="images/project3-1.png" class="card-img-top" alt="project3" />
+              <div class="card-body">
+                <h5 class="card-title">Download File Simulation</h5>
+                <p class="card-text">Simulasi Download File Menggunakan Thread</p>
+                <span class="badge bg-danger">Java</span>
+              </div>
+            </div>
+          </div>
+          <!-- Item 4 -->
+          <div class="col-md-4 portfolio-item" data-category="mobile">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal4" style="cursor: pointer">
+              <img src="images/project4-1.png" class="card-img-top" alt="project4" />
+              <div class="card-body">
+                <h5 class="card-title">Katalog Fakultas UNAND</h5>
+                <p class="card-text">Aplikasi Katalog Fakultas di Universitas Andalas</p>
+                <span class="badge bg-success">Mobile</span>
+              </div>
+            </div>
+          </div>
+          <!-- Item 5 -->
+          <div class="col-md-4 portfolio-item" data-category="web">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal5" style="cursor: pointer">
+              <img src="images/project5-1.png" class="card-img-top" alt="project5" />
+              <div class="card-body">
+                <h5 class="card-title">Portofolio Website</h5>
+                <p class="card-text">Website Portofolio Profesional</p>
+                <span class="badge bg-primary">Web</span>
+              </div>
+            </div>
+          </div>
+          <!-- Item 6 -->
+          <div class="col-md-4 portfolio-item" data-category="java">
+            <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal6" style="cursor: pointer">
+              <img src="images/project6-1.png" class="card-img-top" alt="project6" />
+              <div class="card-body">
+                <h5 class="card-title">Kalkulator Sederhana</h5>
+                <p class="card-text">Kalkulator Sederhana Menggunakan Java.</p>
+                <span class="badge bg-danger">Java</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- modal 1-->
+    <div class="modal fade" id="modal1" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Simple Portofolio Website</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel1" class="carousel slide mb-3" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project1-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project1-2.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project1-3.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project1-4.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Project membuat website portofolio sederhana menggunakan framework bootstrap 5, merupakan project pertama saya dalam mengenal web design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal 2 -->
+    <div class="modal fade" id="modal2" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Aplikasi Laundry Berbasis Java</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel2" class="carousel slide mb-3" data-bs-ride="carousel2">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project2-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project2-2.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project2-3.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project2-4.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Prototype aplikasi manajemen laundry berbasis java, aplikasi ini memiliki 4 tampilan yaitu main frame, login frame, user frame, dan customer frame.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal 3 -->
+    <div class="modal fade" id="modal3" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Simulasi Download File</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel3" class="carousel slide mb-3" data-bs-ride="carousel3">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project3-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project3-2.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel3" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Simulasi proses download file menggunakan thread pada java.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal 4 -->
+    <div class="modal fade" id="modal4" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Katalog Fakultas UNAND</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel4" class="carousel slide mb-3" data-bs-ride="carousel4">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project4-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project4-2.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project4-3.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel4" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel4" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Aplikasi mobile layanan informasi fakultas yang ada di Universtias Andalas dan profil singkatnya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal 5 -->
+    <div class="modal fade" id="modal5" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Portofolio Website</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel5" class="carousel slide mb-3" data-bs-ride="carousel5">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project5-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project5-2.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project5-3.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project5-4.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel5" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel5" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Project membuat website portofolio menggunakan framework bootstrap 5, project ini merupakan penugasan akhir dalam mata kuliah desain web.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal 6 -->
+    <div class="modal fade" id="modal6" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Kalkulator Sederhana</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="carousel6" class="carousel slide mb-3" data-bs-ride="carousel6">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/project6-1.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project6-2.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project6-3.png" class="d-block w-100" />
+                </div>
+                <div class="carousel-item">
+                  <img src="images/project6-4.png" class="d-block w-100" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel6" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel6" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p>Aplikasi Kalkulator sederhana berbasis java, memiliki operasi penjumlahan, pengurangan, perkalian, pembagian, dan persen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3 mt-5">
+      <div class="container text-center">
+        <h4 class="fw-bold mb-4">teguhsmlnna</h4>
+        <ul class="list-unstyled d-flex justify-content-center gap-4 mb-4">
+          <li><a href="index.html" class="text-white text-decoration-none">HOME</a></li>
+          <li><a href="about.html" class="text-white text-decoration-none">ABOUT</a></li>
+          <li><a href="portofolio.html" class="text-white text-decoration-none">PORTFOLIO</a></li>
+          <li><a href="contact.html" class="text-white text-decoration-none">CONTACT</a></li>
+        </ul>
+        <div class="d-flex gap-3 fs-4 justify-content-center mb-4">
+          <a href="https://www.instagram.com/teguhsmlnna/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-instagram fs-2"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/teguh-esa-maulanna-83820531b/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-linkedin fs-2"></i>
+          </a>
+          <a href="https://github.com/teguhsmlnna666" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github fs-2"></i>
+          </a>
+        </div>
+        <hr class="border-light" />
+        <p class="small mb-0">&copy; 2025 teguhsmlnna. All rights reserved</p>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
