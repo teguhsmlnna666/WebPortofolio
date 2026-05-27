@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum - Teguh Esa Maulanna</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../Style.css" />
+  </head>
+  <body>
+    <div class="container mt-5 mb-5">
+      <div class="card p-4 shadow rounded-4">
+        <h1 class="fw-bold mb-3">
+          Laporan Praktikum Pekan 7 - Migration, Seeding, Routing, Model, Controller, dan View
+        </h1>
+        <p class="text-secondary">Praktikum Pemrograman Web</p>
+        <hr />
+
+        <h3>Tujuan Praktikum</h3>
+        <p>
+          Memahami konsep dasar pengembangan aplikasi web berbasis framework Laravel dengan menerapkan pola MVC (Model
+          View Controller), Melatih kemampuan mahasiswa dalam mengelola database, routing, model, controller, dan view
+          pada framework Laravel, dan Mengimplementasikan seluruh materi praktikum dalam bentuk aplikasi CRUD (Create,
+          Read, Update, Delete) sederhana.
+        </p>
+
+        <h3>Langkah Kerja Praktikum</h3>
+        <p>Persiapan Sistem:</p>
+        <ul>
+          <li>Computer / laptop</li>
+          <li>XAMPP</li>
+          <li>Visual Studio Code</li>
+          <li>Composer, GIT, Node JS, NPM</li>
+        </ul>
+
+        <p>Teori dan Langkah-Langkah:</p>
+        <ol>
+          <li>
+            Konfigurasi Database pada file .env, konfigurasi seperti berikut:<br />
+            <code>
+              DB_CONNECTION=mysql<br />
+              DB_HOST=127.0.0.1<br />
+              DB_PORT=3306<br />
+              DB_DATABASE=praktikum-laravel<br />
+              DB_USERNAME=root<br />
+              DB_PASSWORD=
+            </code>
+          </li>
+          <li>
+            Membuat tabel products menggunakan migration, jalankan perintah berikut pada terminat untuk membuat
+            tabel:<br />
+            <code>php artisan make:migration create_products_table</code><br />
+            File migration akan berada pada folder database/migrations.
+          </li>
+          <li>
+            Jalankan migration menggunakan perintah
+            <code>php artisan migrate</code>, maka tabel products akan terbuat otomatis.
+          </li>
+          <li>
+            <code>php artisan migrate:rollback</code> untuk membatalkan proses migration, dan
+            <code>php artisan migrate:fresh</code> untuk memulai ulang semua proses migration.
+          </li>
+          <li>
+            Membuat seeder untuk mengisi data awal ke database, jalankan perintah berikut ini pada terminal:<br />
+            <code>php artisan make:seeder ProductSeeder</code><br />
+            File seeder akan berada pada folder database/seeders.
+          </li>
+          <li>
+            Membuat data seeder dengan mengisikan file ProductSeeder.php, seperti berikut:<br />
+            <code>
+              DB::table('products')->insert([<br />
+              [<br />
+              'name' => 'Laptop',<br />
+              'price' => 7000000,<br />
+              'description' => 'Laptop untuk pemrograman',<br />
+              'created_at' => now(),<br />
+              'updated_at' => now()<br />
+              ],<br />
+              [<br />
+              'name' => 'Mouse',<br />
+              'price' => 150000,<br />
+              'description' => 'Mouse wireless',<br />
+              'created_at' => now(),<br />
+              'updated_at' => now()<br />
+              ]<br />
+              ]);
+            </code>
+          </li>
+          <li>
+            Tambahkan pemanggilan seeder pada file DatabaseSeeder.php, dengan script:
+            <code>$this->call(ProductSeeder::class);</code><br />
+            Jalankan seeder dengan perintah
+            <code>php artisan db:seed</code> atau <code>php artisan migrate:fresh --seed</code> untuk menjalankan
+            seeding bersamaan dengan migration.
+          </li>
+          <li>
+            Routing terdiri dari beberapa jenis, yaitu routing dasar, routing parameter, named route, dan route
+            group.<br />
+            Contoh routing parameter:<br />
+            <code>
+              Route::get('/produk/{$id}', function ($id) {<br />
+              return 'Produk ID: ' . $id;<br />
+              }); </code
+            ><br />
+            Route ini dapat diakses pada
+            <a href="http://127.0.0.1:8000/produk/1" target="_blank">http://127.0.0.1:8000/produk/1</a>
+          </li>
+          <li>Buat file Product.php pada folder app/models.</li>
+          <li>
+            Controller digunakan sebagai logika aplikasi yang menghubungkan model dan view. Untuk membuat controller
+            jalankan perintah berikut ini:<br />
+            <code>php artisan make:controller ProductController</code><br />
+            File controller akan berada pada folder app/Http/Controllers.
+          </li>
+          <li>
+            Buka file ProductController.php yang sudah dibuat sebelumnya, tambahkan method pada controller tersebut.<br />
+            Hubungkan route ke controller dengan menambahkan script
+            <code>Route::get('/products', [ProductController::class, 'index']);</code>
+            pada file web.php<br />
+            Lalu hubungkan controller dengan view, isikan pada method index di ProductController dengan script
+            berikut:<br />
+            <code>
+              $products = [<br />
+              'Laptop',<br />
+              'Mouse',<br />
+              'Keyboard'<br />
+              ];<br />
+              return view ('products', compact('products')); </code
+            ><br />
+            Atau hubungkan controller dengan model agar langsung mengambil data dari database, dengan menambahkan script
+            berikut pada method index:<br />
+            <code>
+              $products = Product::all();<br />
+              return view ('products', compact('products'));
+            </code>
+          </li>
+          <li>
+            Membuat view dengan nama products.blade.php pada folder resources/views/ yang bertujuan untuk menampilkan
+            halaman kepada pengguna.<br />
+            Isikan file view dengan script html berikut pada bagian body <code>&lt;h1&gt;Daftar Produk&lt;/h1&gt;</code>
+          </li>
+          <li>
+            Tampilkan view dari route dengan menambahkan script berikut pada file web.php:<br />
+            <code>
+              Route::get('/products', function () {<br />
+              return view('products');<br />
+              });
+            </code>
+          </li>
+          <li>
+            Untuk menampilkan data pada blade, tambahkan script berikut pada file products.blade.php:<br />
+            <code>
+              &lt;ul&gt;<br />
+              @foreach ($products as $product)<br />
+              &lt;li&gt;{{ $product }}&lt;/li&gt;<br />
+              @endforeach<br />
+              &lt;/ul&gt; </code
+            ><br />
+            Jalankan dengan akses URL
+            <a href="http://127.0.0.1:8000/products" target="_blank">http://127.0.0.1:8000/products</a><br />
+            <img src="/laporan/image/LaporanDua-1.png" class="rounded w-50" alt="LaporanDua-1" />
+          </li>
+          <li>
+            Buat sebuah blade layout yang akan digunakan untuk membuat sebuah template yang dapat digunakan untuk banyak
+            halaman.<br />
+            Buat folder layouts didalam resource/views/ terlebih dahulu, lalu buat file app.blade.php didalam folder
+            tersebut. Tambahkan script html berikut pada bagian body:<br />
+            <code>
+              &lt;h1&gt;Aplikasi Laravel&lt;/h1&gt;<br />
+              @yield('content')
+            </code>
+          </li>
+          <li>
+            Selanjutnya ganti isi file products.blade.php dengan script berikut untuk menggunakan layout pada view
+            blade:<br />
+            <code>
+              <code>
+                @extends('layouts.app')<br />
+                @section('title', 'Products')<br />
+                @section('content')<br />
+                &lt;h1&gt;Daftar Produk&lt;/h1&gt;<br />
+                &lt;ul&gt;<br />
+                @foreach ($products as $product)<br />
+                &lt;li&gt;{{ $product-&gt;name }}&lt;/li&gt;<br />
+                @endforeach<br />
+                &lt;/ul&gt;<br />
+                @endsection
+              </code>
+            </code>
+          </li>
+        </ol>
+
+        <p>
+          <strong>Tugas Praktikum:</strong><br />
+          Buatkan migration, seeding, model, route, controller, view untuk CRUD data mahasiswa.
+        </p>
+        <ol>
+          <li>
+            Buat migration, seeding, model, dan controller Mahasiswa dengan menjalankan perintah berikut:<br />
+            <code>php artisan make:model Mahasiswa -mcs</code>
+          </li>
+          <li>
+            Ganti file controller dengan perintah berikut ini untuk membuat fungsi CRUD pada controller:<br />
+            <code>php artisan make:controller MahasiswaController --resource</code>
+          </li>
+          <li>
+            Buka file migration, tambahkan script berikut pada function up() untuk mengisikan field tabel mahasiswa:<br />
+            <code>
+              $table->id();<br />
+              $table->string('nama');<br />
+              $table->string('nim')->unique();<br />
+              $table->string('jurusan');<br />
+              $table->timestamps(); </code
+            ><br />
+            Lalu jalankan perintah <code>php artisan migrate</code> untuk memulai proses migration.
+          </li>
+          <li>
+            Buka file seeder, isikan data awal pada function run(), dengan script berikut:<br />
+            <code>
+              DB::table('mahasiswas')->insert([<br />
+              [<br />
+              'nama' => 'Teguh Esa Maulanna',<br />
+              'nim' => '2411532005',<br />
+              'jurusan' => 'Informatika',<br />
+              'created_at' => now(),<br />
+              'updated_at' => now(),<br />
+              ],<br />
+              ]);
+            </code>
+          </li>
+          <li>
+            Pada file DatabaseSeeder.php tambahkan script berikut <code>this->call(MahasiswaSeeder::class);</code> untuk
+            memanggil seeder mahasiswa.<br />
+            Jalankan perintah <code>php artisan migrate:fresh --seed</code>.
+          </li>
+          <li>
+            Buka file model, tambahkan script berikut untuk menghubungkan model dengan tabel mahasiswa:<br />
+            <code>
+              protected $fillable = [<br />
+              'nama',<br />
+              'nim',<br />
+              'jurusan',<br />
+              ];
+            </code>
+          </li>
+          <li>
+            Untuk membuat route yang akan menghubungkan controller dengan view, tambahkan script berikut pada file
+            web.php:<br />
+            <code>
+              use App\Http\Controllers\MahasiswaController;<br />
+              Route::resource('mahasiswas', MahasiswaController::class);
+            </code>
+          </li>
+          <li>
+            Buka file contoller,tambahkan script berikut untuk membuat fungsi CRUD dan menghubungkan model dengan
+            view:<br />
+            function index() untuk menampilkan semua data<br />
+            <code>
+              $mahasiswas = Mahasiswa::all();<br />
+              return view('mahasiswas.index', compact('mahasiswas')); </code
+            ><br />
+            function create() untuk menampilkan form penambahan data<br />
+            <code> return view('mahasiswas.create'); </code><br />
+            function store() untuk menyimpan data baru<br />
+            <code>
+              Mahasiswa::create($request->all());<br />
+              return redirect()->route('mahasiswas.index'); </code
+            ><br />
+            function edit() untuk menampilkan form edit data<br />
+            <code> return view('mahasiswas.edit', compact('mahasiswa')); </code><br />
+            function update() untuk memperbarui data<br />
+            <code>
+              $mahasiswa->update($request->all());<br />
+              return redirect()->route('mahasiswas.index'); </code
+            ><br />
+            function destroy() untuk mneghapus data<br />
+            <code>
+              $mahasiswa->delete();<br />
+              return redirect()->route('mahasiswas.index');
+            </code>
+          </li>
+          <li>
+            Modifikasi layout views pada file app.blade.php dengan script berikut:<br />
+            <code>
+              &lt;h1&gt;Data Mahasiswa&lt;/h1&gt;<br />
+              @yield('content')
+            </code>
+          </li>
+          <li>
+            Untuk membuat view dari CRUD mahasiswa, buat folder mahasiswas didalam resources/views/, lalu buat file:<br />
+            <ul>
+              <li>index.blade.php</li>
+              <li>create.blade.php</li>
+              <li>edit.blade.php</li>
+            </ul>
+          </li>
+          <li>
+            Jalankan perintah <code>php artisan serve</code>, dan akses URL
+            <a href="http://127.0.0.1:8000/mahasiswas" target="_blank">http://127.0.0.1:8000/mahasiswas</a>
+          </li>
+          <li>
+            Output program:<br />
+            <div class="d-flex gap-3">
+              <img src="/laporan/image/LaporanDua-2.png" class="rounded w-25" alt="LaporanDua-2" />
+              <img src="/laporan/image/LaporanDua-3.png" class="rounded w-25" alt="LaporanDua-3" />
+              <img src="/laporan/image/LaporanDua-4.png" class="rounded w-25" alt="LaporanDua-4" />
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="mt-4">Kesimpulan</h3>
+        <p>
+          Dari praktikum ini kita telah mempelajari bahwa, dengan framework laravel dapat mempermudah proses
+          pengembangan aplikasi web dengan menerapkan konep MVC. Kita telah mempelajari cara konfigurasi database,
+          pembuatan migration, seeding, routing, model, controller, dan view menggunakan Blade Template. Kita juga telah
+          mengimplementasikan CRUD dalam aplikasi sederhana untuk mengelola data yang ada.
+        </p>
+        <h3 class="mt-4">Repository Github</h3>
+        <p>
+          Repository project ini dapat diakses melalui link berikut:<br />
+          <a href="https://github.com/teguhsmlnna666/WebPortofolio" target="_blank"
+            >https://github.com/teguhsmlnna666/WebPortofolio
+          </a>
+        </p>
+
+        <div class="text-center">
+          <a href="../blog.html" class="btn rounded-pill w-50 mt-3"> Kembali </a>
+        </div>
+      </div>
+    </div>
+    <script src="../script.js"></script>
+  </body>
+</html>
