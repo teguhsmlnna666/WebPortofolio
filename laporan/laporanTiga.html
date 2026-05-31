@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laporan Praktikum - Teguh Esa Maulanna</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../Style.css" />
+</head>
+
+<body>
+  <div class="container mt-5 mb-5">
+    <div class="card p-4 shadow rounded-4">
+      <h1 class="fw-bold mb-3">
+        Laporan Praktikum Pekan 8 - Laravel Relationship
+      </h1>
+      <p class="text-secondary">Praktikum Pemrograman Web</p>
+      <hr />
+
+      <h3>Tujuan Praktikum</h3>
+      <p>
+        Memahami konsep relationship dalam Laravel, mengimplementasikan One-to-Many dan Many-to-Many relationship,
+        membuat migration dengan foreign key, menggunakan Eloquent relationship untuk query data, dan Menampilkan data
+        dengan relationship di view.
+      </p>
+      </p>
+
+      <h3>Langkah Kerja Praktikum</h3>
+      <p>Persiapan Sistem:</p>
+      <ul>
+        <li>Computer / laptop</li>
+        <li>XAMPP</li>
+        <li>Visual Studio Code</li>
+        <li>Composer, GIT, Node JS, NPM</li>
+      </ul>
+
+      <p>Teori dan Langkah-Langkah:</p>
+      <ol>
+        <li>
+          Buat migration untuk tabel majors menggunakan perintah berikut:<br />
+          <code>
+              php artisan make:migrationn create_majors_table
+            </code><br />
+          Lalu, tambahkan <code>$table->string('name');</code> pada function up() di file migration majors.
+        </li>
+        <li>
+          Buat migration untuk tabel students menggunakan perintah berikut:<br />
+          <code>php artisan make:migration create_students_table</code><br />
+          Lalu, tambahkan syntax berikut pada function up() di file migration students untuk menambahkan kolom:<br />
+          <code>
+              $table->string('nim')->unique();<br/>
+              $table->string('name');<br/>
+              $table->text('address');<br/>
+              $table->foreignId('major_id')->constrained('majors')->onDelete('cascade');
+            </code>
+        </li>
+        <li>
+          Buat migration untuk tabel subjects menggunakan perintah berikut:<br />
+          <code>php artisan make:migration create_subjects_table</code><br />
+          Lalu, tambahkan syntax berikut pada function up() di file migration subjects untuk menambahkan kolom:<br />
+          <code>
+              $table->string('name');<br/>
+              $table->integer('sks');
+            </code>
+        </li>
+        <li>
+          Buat migration untuk tabel pivot antara students dan sybjects menggunakan perintah berikut:<br />
+          <code>php artisan make:migration create_student_subject_table</code><br />
+          Lalu, tambahkan syntax berikut pada function up() di file migration pivot student_subject:<br />
+          <code>
+              $table->foreignId('student_id')->constrained('students')->onDelete('cascade');<br/>
+              $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');<br/>
+              $table->unique(['student_id', 'subject_id']);
+            </code>
+        </li>
+        <li>
+          Jalankan proses migration dengan perintah <code>php artisan migrate</code>.
+        </li>
+        <li>
+          Buat model untuk tabel major dengan perintah berikut:<br />
+          <code>php artisan make:model Major</code><br />
+          Lalu, tambahkan function berikut agar model dapat mengakses data pada tabel students:<br />
+          <code>
+              use HasFactory;<br/>
+              protected $fillable = [name];<br/>
+              //Relationships:One Major Has Many Students<br/>
+              public function students()<br/>
+              {<br/>
+                  return $this->hasMany(Student::class);<br/>
+              }
+            </code>
+        </li>
+        <li>
+          Buat model untuk tabel student dengan perintah berikut:<br />
+          <code>php artisan make:model Student</code><br />
+          Lalu, tambahkan function berikut agar model dapat mengakses data pada tabel major dan subjects<br />
+          <code>
+              use HasFactory;<br/>
+              protected $fillable = ['nim', 'name', 'address', 'major_id'];<br/>
+              // Relationship: Many Students belong to one Major<br/>
+              public function major()<br/>
+              {<br/>
+              return $this->belongsTo(Major::class);<br/>
+              }<br/>
+              // Relationship: Many Students belong to many Subjects<br/>
+              public function subjects()<br/>
+              {<br/>
+              return $this->belongsToMany(Subject::class);<br/>
+              }
+            </code>
+        </li>
+        <li>
+          Buat model untuk tabel subject dengan perintah berikut:<br />
+          <code>php artisan make:model Subject</code><br />
+          Lalu, tambahkan function berikut agar model dapat mengakses data pada tabel students<br />
+          <code>
+              use HasFactory;<br/>
+              protected $fillable = ['name', 'sks'];<br/>
+              // Relationship: Many Subjects belong to many Students<br/>
+              public function students()<br/>
+              {<br/>
+              return $this->belongsToMany(Student::class);<br/>
+              }
+            </code>
+        </li>
+        <li>
+          Buat seeder untuk Major dengan perintah berikut:<br />
+          <code>php artisan make:seeder MajorSeeder</code><br />
+          Lalu, tambahkan syntax berikut pada function run() untuk mengisi data awal ke tabel majors:<br />
+          <code>
+              $majors = [<br/>
+                ['name' => 'Teknik Informatika'],<br/>
+              ];
+            </code>
+        </li>
+        <li>
+          Buat seeder untuk Subject dengan perintah berikut:<br />
+          <code>php artisan make:seeder SubjectSeeder</code><br />
+          Lalu, tambahkan syntax berikut pada function run() untuk mengisi data awal ke tabel subjects:<br />
+          <code>
+              $subjects = [
+                ['name' => 'Pemrograman Web', 'sks' => 3],<br/>
+              ];
+            </code>
+        </li>
+        <li>
+          Buat seeder untuk Student dengan perintah berikut:<br />
+          <code>php artisan make:seeder StudentSeeder</code><br />
+          Lalu, tambahkan syntax berikut pada function run() untuk mengisi data awal ke tabel students:<br />
+          <code>
+              $students = [
+                  ['nim' => '20210001', 'name' => 'Ahmad Rizki', 'address' => 'Jl. Merdeka No. 1', 'major_id' => '1'],<br/>
+              ];<br/>
+              // assign random subjects to each student<br/>
+              $subjects = Subject::inRandomOrder()->take(rand(2, 4))->pluck('id');<br/>
+              $student->subjects()->attach($subjects);
+            </code>
+        </li>
+        <li>
+          Tambahkan syntax berikut pada function run() di DatabaseSeeder untuk menjalankan semua seeder yang sudah
+          dibuat:<br />
+          <code>
+              $this->call([<br/>
+                  MajorSeeder::class,<br/>
+                  SubjectSeeder::class,<br/>
+                  StudentSeeder::class,<br/>
+              ]);
+            </code><br />
+          Lalu, jalankan proses seeding dengan perintah <code>php artisan db:seed</code>
+        </li>
+        <li>
+          Buat controller untuk Student dengan perintah
+          <code>php artisan make:controller StudentController --resource</code><br />
+          Tambahkan beberapa fungsi operasi CRUD pada StudentController untuk mengelola data mahasiswa, yaitu:<br />
+          <ul>
+            <li>index() untuk menampilkan daftar mahasiswa</li>
+            <li>show() untuk menampilkan detail mahasiswa</li>
+            <li>create() untuk menampilkan form pembuatan mahasiswa baru</li>
+            <li>store() untuk menyimpan data mahasiswa baru</li>
+            <li>edit() untuk menampilkan form pengeditan mahasiswa</li>
+            <li>update() untuk memperbarui data mahasiswa</li>
+            <li>destroy() untuk menghapus data mahasiswa</li>
+          </ul>
+        </li>
+        <li>
+          Tambahkan route untuk StudentController pada web.php dengan syntax berikut:<br />
+          <code>
+              Route::get('/', function () {<br/>
+                  return redirect()->route('students.index');<br/>
+              });<br/>
+              Route::resource('students', StudentController::class);<br/>
+            </code>
+        </li>
+        <li>
+          Buat view yang akan menampilkan data mahasiswa menggnakan Blade Template, modifikasi layout pada file
+          app.blade.php
+        </li>
+        <li>
+          Buat view untuk menampilkan daftar mahasiswa dengan nama index.blade.php dan form untuk membuat data mahasiswa
+          dengan nama create.blade.php
+        </li>
+        <li>
+          Output Aplikasi:<br />
+          <div class="d-flex gap-3">
+            <img src="/laporan/image/LaporanTiga-1.png" class="rounded w-25" alt="LaporanTiga-1" />
+            <img src="/laporan/image/LaporanTiga-2.png" class="rounded w-25" alt="LaporanTiga-2" />
+            <img src="/laporan/image/LaporanTiga-3.png" class="rounded w-25" alt="LaporanTiga-3" />
+          </div>
+        </li>
+      </ol>
+
+      <p>
+        <strong>Tugas Praktikum:</strong><br />
+        Buat query untuk menampilkan:
+      <ul>
+        <li>Semua mahasiswa beserta jurusan dan mata kuliahnya</li>
+        <li>Jurusan yang memiliki mahasiswa terbanyak</li>
+        <li>Mata kuliah yang diambil oleh mahasiswa tertentu</li>
+        <li>Total SKS yang diambil setiap mahasiswa</li>
+      </ul>
+      Penyelesaian Tugas Praktikum:
+      </p>
+
+      <ol>
+        <li>
+          Buat query untuk menampilkan semua mahasiswa beserta jurusan dan mata kuliahnya.<br />
+          <code>
+              $students = Student::with(['major', 'subjects'])->get();<br/>
+              return view('students.index', compact('students'));
+            </code><br />
+          <img src="/laporan/image/LaporanTiga-1.png" class="rounded w-25" alt="LaporanTiga-1" />
+        </li>
+        <li>
+          Buat query untuk menampilkan jurusan yang memiliki mahasiswa terbanyak.<br />
+          <code>
+              $topMajor = Major::withCount('students')->orderBy('students_count', 'desc')->first();<br/>
+              return view('students.index', compact(<br/>
+                  'students',<br/>
+                  'topMajor'<br/>
+              ));
+            </code><br />
+          <img src="/laporan/image/LaporanTiga-4.png" class="rounded w-25" alt="LaporanTiga-4" />
+        </li>
+        <li>
+          Buat query untuk menampilkan mata kuliah yang diambil oleh mahasiswa tertentu.<br />
+          <code>
+              $student = Student::with(['major', 'subjects'])->findOrFail($id);<br/>
+              @foreach($student->subjects as $subject)<br/>
+                  {{ $subject->name }}<br/>
+              @endforeach
+            </code><br />
+          <img src="/laporan/image/LaporanTiga-5.png" class="rounded w-25" alt="LaporanTiga-5" />
+        </li>
+        <li>
+          Buat query untuk menampilkan total SKS yang diambil setiap mahasiswa.<br />
+          <code>
+              $student = Student::with(['major', 'subjects'])->findOrFail($id);<br/>
+              {{ $student->subjects->sum('sks') }}
+            </code><br />
+          <img src="/laporan/image/LaporanTiga-6.png" class="rounded w-25" alt="LaporanTiga-6" />
+        </li>
+      </ol>
+
+      <h3 class="mt-4">Kesimpulan</h3>
+      <p>
+        Dari praktikum ini kita telah mempelajari bahwa, Relationship adalah konsep fundamental dalam pengembangan
+        aplikasi web dengan
+        database. Pada praktikum ini, kita mengetahui cara membuat relationship One-to-Many dan Many-to-Many di Laravel,
+        implementasi foreign key dan pivot table, penggunaan Eloquent relationship untuk query data, penggunaan eager
+        loading, dan cara menampilkan data relationship di view. Dengan penggunaan relationship akan membantu kita dalam
+        membangun aplikasi yang efisien dan mudah dimaintainance nantinya.
+      </p>
+      <h3 class="mt-4">Repository Github</h3>
+      <p>
+        Repository project ini dapat diakses melalui link berikut:<br />
+        <a href="https://github.com/teguhsmlnna666/WebPortofolio"
+          target="_blank">https://github.com/teguhsmlnna666/WebPortofolio
+        </a>
+      </p>
+
+      <div class="text-center">
+        <a href="../blog.html" class="btn rounded-pill w-50 mt-3"> Kembali </a>
+      </div>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+
+</html>
