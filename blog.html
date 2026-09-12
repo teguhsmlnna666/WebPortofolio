@@ -47,7 +47,8 @@
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="blog.html"
-                >Blog</a>
+                >Blog</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
@@ -60,11 +61,28 @@
     <!-- laporan -->
     <section id="blog" class="mt-5 p-4">
       <div class="container rounded-4 shadow mt-4 p-4 mb-5">
-        <h2 class="fw-bold text-center mb-4">Web Programming</h2>
+        <h2 class="fw-bold text-center mb-4">Laporan Praktikum</h2>
 
-        <div class="row g-4">
+        <!-- filter -->
+        <ul class="nav nav-pills justify-content-center mb-4" id="portfolio-filters">
+          <li class="nav-item">
+            <button class="nav-link active" data-filter="all">All</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-filter="web">
+              Web Programming
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-filter="mobile">
+              Mobile Apps
+            </button>
+          </li>
+        </ul>
+
+        <div class="row g-4" id="portfolio-container">
           <!-- Laporan 1 -->
-          <div class="col-md-4">
+          <div class="col-md-4 portfolio-item" data-category="web">
             <div class="card h-100">
               <img src="images/laravel.png" class="card-img-top"/>
               <div class="card-body">
@@ -80,12 +98,14 @@
           </div>
 
           <!-- Laporan 2 -->
-          <div class="col-md-4">
+          <div class="col-md-4 portfolio-item" data-category="web">
             <div class="card h-100">
               <img src="images/laravel.png" class="card-img-top"/>
               <div class="card-body">
                 <h5 class="card-title">Laporan Praktikum Pekan 7</h5>
-                <p class="card-text">Migration, Seeding, Routing, Model, Controller, dan View</p>
+                <p class="card-text">
+                  Migration, Seeding, Routing, Model, Controller, dan View
+                </p>
                 <a href="laporan/laporanDua.html" class="btn rounded-pill">
                   Read More
                 </a>
@@ -94,7 +114,7 @@
           </div>
 
           <!-- Laporan 3 -->
-          <div class="col-md-4">
+          <div class="col-md-4 portfolio-item" data-category="web">
             <div class="card h-100">
               <img src="images/laravel.png" class="card-img-top"/>
               <div class="card-body">
@@ -108,7 +128,7 @@
           </div>
 
           <!-- Laporan 4 -->
-          <div class="col-md-4">
+          <div class="col-md-4 portfolio-item" data-category="web">
             <div class="card h-100">
               <img src="images/laravel.png" class="card-img-top"/>
               <div class="card-body">
@@ -122,15 +142,15 @@
           </div>
 
           <!-- Laporan 5 -->
-          <div class="col-md-4">
+          <div class="col-md-4 portfolio-item" data-category="mobile">
             <div class="card h-100">
-              <img src="images/laravel.png" class="card-img-top"/>
+              <img src="images/flutter.png" class="card-img-top"/>
               <div class="card-body">
-                <h5 class="card-title">Laporan Praktikum Pekan 10</h5>
-                <p class="card-text">Coming Soon.</p>
-                <!-- <a href="laporan/laporanLima.html" class="btn rounded-pill">
+                <h5 class="card-title">Laporan Praktikum Pekan 1</h5>
+                <p class="card-text">Input Widgets dan Basic Form</p>
+                <a href="laporan/laporanMobileSatu.html" class="btn rounded-pill">
                   Read More
-                </a> -->
+                </a>
               </div>
             </div>
           </div>
@@ -138,25 +158,45 @@
         </div>
       </div>
     </section>
-    
+
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3 mt-5">
       <div class="container text-center">
         <h4 class="fw-bold mb-4">teguhsmlnna</h4>
         <ul class="list-unstyled d-flex justify-content-center gap-2 mb-4">
-          <li><a href="index.html" class="text-white text-decoration-none">HOME</a></li>
-          <li><a href="about.html" class="text-white text-decoration-none">ABOUT</a></li>
-          <li><a href="portofolio.html" class="text-white text-decoration-none">PORTFOLIO</a></li>
-          <li><a href="contact.html" class="text-white text-decoration-none">CONTACT</a></li>
+          <li>
+            <a href="index.html" class="text-white text-decoration-none">HOME</a>
+          </li>
+          <li>
+            <a href="about.html" class="text-white text-decoration-none">ABOUT</a>
+          </li>
+          <li>
+            <a href="portofolio.html" class="text-white text-decoration-none">PORTFOLIO</a>
+          </li>
+          <li>
+            <a href="contact.html" class="text-white text-decoration-none">CONTACT</a>
+          </li>
         </ul>
         <div class="d-flex gap-3 fs-4 justify-content-center mb-4">
-          <a href="https://www.instagram.com/teguhsmlnna/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.instagram.com/teguhsmlnna/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="bi bi-instagram fs-2"></i>
           </a>
-          <a href="https://www.linkedin.com/in/teguh-esa-maulanna-83820531b/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.linkedin.com/in/teguh-esa-maulanna-83820531b/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="bi bi-linkedin fs-2"></i>
           </a>
-          <a href="https://github.com/teguhsmlnna666" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/teguhsmlnna666"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="bi bi-github fs-2"></i>
           </a>
         </div>
@@ -170,6 +210,7 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+
     <script src="script.js"></script>
   </body>
 </html>

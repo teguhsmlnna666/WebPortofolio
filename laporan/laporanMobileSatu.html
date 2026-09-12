@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum - Teguh Esa Maulanna</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="../Style.css" />
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="card p-4 shadow rounded-4">
+        <h1 class="fw-bold mb-3">Laporan Praktikum - Form TextField dan TextFormField</h1>
+        <p class="text-secondary">Praktikum Aplikasi Mobile</p>
+        <hr />
+
+        <!-- Pendahuluan -->
+        <h3>A. Pendahuluan</h3>
+        <p>
+            Form merupakan widget yang digunakan untuk menerima berbagai jenis inputan seperti TextField, TextFormField,
+            CheckBox, Switch, Dropwdown, dan lain-lain. Form menjadi media inputan yang dapat mengelola dan memvalidasi
+            inputan tersebut. Pada praktikum ini kita menerapkan dua jenis form yaitu TextField dan TextFormField.
+            TextField merupakan widget yang digunakan untuk menerima input teks dari pengguna, sedangkan TextFormField
+            merupakan widget TextField yang lebih lengkap karena sudah terdapat logika validasi dan manajemen state
+            didalamnya.
+        </p>
+
+        <!-- Tujuan -->
+        <h3>B. Tujuan</h3>
+        <ol>
+            <li>Mampu memahami dan menerapkan beberapa input widgets.</li>
+            <li>Mampu mengelola inputan dari berbagai input widgets.</li>
+        </ol>
+
+        <!-- Langkah Kerja -->
+        <h3>C. Langkah Kerja Praktikum</h3>
+
+        <p><strong>a) Basic Form TextField</strong></p>
+        <ol>
+            <li>Buat file dart baru dengan nama form-textfield.</li>
+            <li>
+                Import package flutter.
+                <p>Library ini berisikan berbagai jenis widget yang dapat digunakan.</p>
+            </li>
+            <li>
+                Tambahkan fungsi main().
+                <p>Fungsi main() ini digunakan untuk menjalankan program flutter.</p>
+            </li>
+            <li>
+                Tambahkan kelas MyApp.
+                <p>
+                Kelas MyApp ini sebagai widget utama aplikasi yang mewarisi kelas StatelessWidget. StatelessWidget
+                digunakan karena data yang akan ditampilkan tidak mengalami perubahan selama aplikasi berjalan. Didalamnya
+                terdapat method build yang berisikan tampilan halaman aplikasi menggunakan Scaffold, didalamnya terdapat
+                appBar dan body.
+                </p>
+            </li>
+            <li>
+                Tambahkan kelas MyForm.
+                <p>
+                Pada kelas MyForm kita menggunakan StatefulWidget yang digunakan ketika data yang akan ditampilkan dapat
+                mengalami perubahan. Didalamnya terdapat method untuk membuat objek state yang akan menyimpan data dan
+                logika MyForm, yaitu _MyFormState().
+                </p>
+            </li>
+            <li>
+                Tambahkan kelas _MyFormState.
+                <p>Kelas ini berisikan data dan logika yang digunakan oleh MyForm, didalmnya terdapat:</p>
+                <ol>
+                <li>
+                    <strong>TextEditingController:</strong>
+                    digunakan untuk mengontrol dan mengambil isi dari TextField.
+                </li>
+                <li>
+                    <strong>Method dispose():</strong>
+                    digunakan untuk membersihkan resource yang telah digunakan oleh controller.
+                </li>
+                <li>
+                    <strong>Method build():</strong>
+                    digunakan untuk membuat tampilan dari MyForm yang berisikan semua komponen form.
+                </li>
+                <li>
+                    <strong>Padding:</strong>
+                    digunakan untuk memberikan jarak antara isi form dengan tepi layar, dengan ukuran 20 pixel.
+                </li>
+                <li>
+                    <strong>Column:</strong>
+                    digunakan untuk menyusun widget secara vertikal dari atas ke bawah dan isi kolom rata ke kiri.
+                </li>
+                <li>
+                    <strong>Text:</strong>
+                    widget yang digunakan untuk menampilkan tulisan, “Masukkan nama anda:”.
+                </li>
+                <li>
+                    <strong>Sizedbox:</strong>
+                    digunakan untuk memberikan jarak kosong antar widget, dengan jarak tinggi 10 pixel.
+                </li>
+                <li>
+                    <strong>Textfield:</strong>
+                    widget yang digunakan untuk menerima input teks dari pengguna. Diberikan beberapa dekorasi seperti
+                    labeltext (“Nama Lengkap”), hintText (“Misalnya Teguh”), border, dan prefixIcon (icon orang).
+                    Menghubungkan widget dengan TextEditingController melalui controller. Serta jenis keyboard yang
+                    digunakan dan fungsi onChanged untuk menampilkan informasi setiap perubahan pada debug console.
+                </li>
+                <li>
+                    <strong>ElevatedButton:</strong>
+                    digunakan untuk menampilkan tombol yang dapat ditekan oleh pengguna. Ketika tombol ditekan, nama yang
+                    sudah dimasukkan akan ditampilkan melalui SnackBar.
+                </li>
+                </ol>
+            </li>
+            <li>Output program.</li>
+            <img src="/laporan/image/laporanMobileSatu-1.png" class="rounded w-25" alt="laporanMobileSatu-1" />
+        </ol>
+
+        <!-- TextFormField -->
+        <p><strong>b) Basic Form TextFormField</strong></p>
+        <ol>
+            <li>Buat file dart baru dengan nama form-textformfield.</li>
+            <li>Import package flutter.</li>
+            <li>Tambahkan fungsi main().</li>
+            <li>
+                Tambahkan kelas MyApp.
+                <p>
+                Kelas MyApp ini sebagai widget utama aplikasi yang mewarisi kelas StatelessWidget. StatelessWidget
+                digunakan karena data yang akan ditampilkan tidak mengalami perubahan selama aplikasi berjalan. Didalamnya
+                terdapat method build yang berisikan tampilan halaman aplikasi menggunakan Scaffold, didalamnya terdapat
+                appBar dan body.
+                </p>
+            </li>
+            <li>
+                Tambahkan kelas MyFormText.
+                <p>
+                Pada kelas MyFormText kita menggunakan StatefulWidget yang digunakan ketika data yang akan ditampilkan
+                dapat mengalami perubahan. Didalamnya terdapat method untuk membuat objek state yang akan menyimpan data
+                dan logika MyForm, yaitu _MyFormTextState().
+                </p>
+            </li>
+            <li>
+                Tambahkan kelas _MyFormTextState.
+                <p>Kelas ini berisikan data dan logika yang digunakan oleh MyForm, didalmnya terdapat:</p>
+                <ol>
+                <li>
+                    <strong>_formKey:</strong>
+                    sebagai penghubung antara form dan proses validasi.
+                </li>
+                <li>
+                    <strong>Controller:</strong>
+                    digunakan untuk mengambil nilai yang diinput pengguna, yaitu nama dan email.
+                </li>
+                <li>
+                    <strong>Method dispose():</strong>
+                    digunakan untuk membersihkan resource yang telah digunakan oleh controller.
+                </li>
+                <li>
+                    <strong>Fungsi _submitForm():</strong>
+                    dijalankan ketika tombol Submit di klik pengguna, jika inputnya valid proses akan dilanjutkan dan
+                    menampilkan pesan berhasil, jika tidak proses berhenti dan muncul pesan error.
+                </li>
+                <li>
+                    <strong>TextFormField:</strong>
+                    widget untuk input teks yang dapat memvalidasi nilainya. Diberikan beberapa dekorasi seperti labeltext
+                    (“Nama Lengkap”), hintText (“Misalnya Teguh”), border, dan prefixIcon (icon orang). Menghubungkan widget
+                    dengan TextEditingController melalui controller. Serta jenis keyboard yang digunakan dan fungsi
+                    onChanged untuk menampilkan informasi setiap perubahan pada debug console.
+                </li>
+                <li>
+                    <strong>ElevatedButton:</strong>
+                    digunakan untuk menampilkan tombol yang dapat ditekan oleh pengguna. Ketika tombol ditekan, nama yang
+                    sudah dimasukkan akan ditampilkan melalui SnackBar.
+                </li>
+                </ol>
+            </li>
+            <li>Output program.</li>
+            <img src="/laporan/image/LaporanMobileSatu-2.png" class="rounded w-25" alt="LaporanMobileSatu-2" />
+        </ol>
+
+        <!-- Tugas Kelas B -->
+        <h3 class="mt-4">D. Tugas Kelas B</h3>
+
+        <ol>
+            <li>Buat file dart baru dengan nama main.</li>
+            <li>Import package flutter.</li>
+            <li>Tambahkan fungsi main.</li>
+            <li>
+            Tambahkan kelas MyApp.
+            <p>
+                Berisikan method build yang digunakan untuk menentukan tampilan atau widget yang akan ditampilkan.
+                Menggunakan MaterialApp sebagai struktur dasarnya dan mengarahkan ke UserRegistrationForm.
+            </p>
+            </li>
+            <li>Buat file dart baru dengan nama user_registration_form.</li>
+            <li>Import package flutter.</li>
+            <li>
+            Tambahkan kelas UserRegistrationForm.
+            <p>
+                Menggunakan kelas StatefulWidget sehingga data widget dapat berubah setelah dijalankan dan
+                menghubungkannya ke state _UserRegistrationFormState.
+            </p>
+            </li>
+            <li>
+                Tambahkan kelas _UserRegistrationFormState.
+                <p>
+                Kelas ini akan menyimpan data dari aplikasi berupa form, controller, validasi, fungsi submit, dan
+                tampilan. Disini menggunakan empat controller TextEditing yaitu name, email, password, dan
+                confirmPassword.
+                </p>
+            </li>
+            <li>
+                Tambahkan method dispose().
+                <p>Method ini digunakan untuk membersihkan resource yang telah digunakan oleh controller.</p>
+            </li>
+            <li>
+                Tambahkan fungsi untuk submitForm.
+                <p>
+                Dijalankan ketika tombol Submit di klik pengguna, jika inputnya valid proses akan dilanjutkan dan
+                menampilkan pesan berhasil, jika tidak proses berhenti dan muncul pesan error.
+                </p>
+            </li>
+            <li>
+                Form input nama.
+                <p>
+                Membuat widget form untuk inputan nama yang dihubungkan dengan controller _nameController. Form diberi
+                dekorasi berupa label “Nama”, border, serta validasi input apakah sudah sesuai.
+                </p>
+            </li>
+            <li>
+                Form input email.
+                <p>
+                Membuat widget form untuk inputan email yang dihubungkan dengan controller _emailController. Form diberi
+                dekorasi berupa label “email”, border, serta validasi input apakah sudah sesuai.
+                </p>
+            </li>
+            <li>
+                Form input password.
+                <p>
+                Membuat widget form untuk inputan password yang dihubungkan dengan controller _passwordController dan
+                karakter password disembunyikan. Form diberi dekorasi berupa label “password”, border, serta validasi
+                input apakah sudah sesuai.
+                </p>
+            </li>
+            <li>
+                Form konfirmasi password.
+                <p>
+                Membuat widget form untuk inputan password yang dihubungkan dengan controller _confirmPasswordController
+                dan karakter password disembunyikan. Form diberi dekorasi berupa label “password”, border, serta validasi
+                input apakah sudah sesuai dengan input password sebelumnya.
+                </p>
+            </li>
+            <li>
+                Tambahkan ElevatedButton.
+                <p>Digunakan untuk membuat tombol Submit.</p>
+            </li>
+            <li>Output Program.</li>
+            <img src="/laporan/image/laporanMobileSatu-3.png" class="rounded w-25" alt="LaporanMobileSatu-1" />
+        </ol>
+
+        <!-- Kesimpulan -->
+        <h3 class="mt-4">E. Kesimpulan</h3>
+        <p>
+            Pada praktikum ini telah diterapkan dua jenis form yaitu TextField dan TextFormField untuk menerima input teks
+            dari pengguna. TextField digunakan untuk menerima input teks dari pengguna, sedangkan TextFormField digunakan
+            untuk input teks yang dapat memvalidasi nilainya. Selain itu, inputan dapat dikelola menggunakan
+            TextEditingController dan proses validasi dapat dilakukan menggunakan Form. Pada tugas kelas B juga telah
+            diterapkan form input nama, email, password, dan konfirmasi password dengan validasi input. Dengan demikian,
+            praktikum ini membantu memahami dan menerapkan beberapa input widgets serta mengelola inputan dari berbagai
+            input widgets.
+        </p>
+
+        <h3 class="mt-4">Repository Github</h3>
+            <p>
+                Repository project ini dapat diakses melalui link berikut:<br />
+                <a href="https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005"
+                    target="_blank">https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005
+                </a>
+            </p>
+
+        <!-- Kembali -->
+        <div class="text-center">
+            <a href="../blog.html" class="btn rounded-pill w-50 mt-3"> Kembali </a>
+        </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    </body>
+</html>
