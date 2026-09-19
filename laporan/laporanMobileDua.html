@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum - Teguh Esa Maulanna</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="../Style.css" />
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="card p-4 shadow rounded-4">
+
+            <h1 class="fw-bold mb-3">
+                Laporan Praktikum Aplikasi Mobile - Pekan 2
+            </h1>
+            <p class="text-secondary">
+                Pengenalan Widgets & Layouting, Styling
+            </p>
+            <hr />
+
+            <!-- Pendahuluan -->
+            <h3>A. Pendahuluan</h3>
+            <p>
+                Flutter merupakan framework open-source yang digunakan dalam pengembangan
+                aplikasi yang dapat dijalankan di berbagai platform. Dalam Flutter, tampilan
+                aplikasi dibangun menggunakan konsep widget, yaitu komponen dasar yang digunakan
+                untuk membentuk struktur, tampilan, dan interaksi pada aplikasi. Widget dapat
+                disusun secara hierarkis sehingga setiap bagian antarmuka dapat dibuat secara
+                terstruktur dan dapat digunakan kembali.
+            </p>
+
+            <p>
+                Berdasarkan penggunaannya widget pada Flutter dapat dibedakan menjadi
+                StatelessWidget dan StatefulWidget. StatelessWidget digunakan untuk menampilkan
+                komponen yang bersifat statis tetap dan tidak memiliki perubahan state selama
+                aplikasi berjalan, sedangkan StatefulWidget digunakan ketika tampilan atau data
+                suatu komponen dapat berubah akibat interaksi pengguna. StatefulWidget memiliki
+                state yang dapat diperbarui menggunakan setState() sehingga perubahan tersebut
+                dapat ditampilkan kembali pada antarmuka aplikasi.
+            </p>
+
+            <p>
+                Selain widget dasar Flutter juga menyediakan berbagai widget untuk mengatur tata
+                letak tampilan aplikasi. Row digunakan untuk menyusun beberapa widget secara
+                horizontal, sedangkan Column digunakan untuk menyusun widget secara vertikal.
+                Widget Padding dan SizedBox dapat digunakan untuk mengatur jarak antar-komponen,
+                sedangkan Container digunakan untuk membungkus dan mengatur tampilan suatu widget,
+                seperti warna, padding, dan bentuk. Widget Card dapat digunakan untuk membuat
+                komponen berbentuk kartu, sedangkan ListTile menyediakan struktur yang praktis
+                untuk menampilkan informasi dalam bentuk daftar dengan bagian leading, title,
+                subtitle, dan trailing.
+            </p>
+
+            <!-- Tujuan -->
+            <h3>B. Tujuan</h3>
+            <ol>
+                <li>Memahami kerangka dasar tampilan aplikasi Flutter.</li>
+                <li>Mampu membedakan penggunaan StatelessWidget dan StatefulWidget.</li>
+                <li>Menerapkan widget Row untuk deretan tombol aksi.</li>
+                <li>Menerapkan widget Column untuk daftar transaksi.</li>
+            </ol>
+
+            <!-- Langkah Kerja -->
+            <h3>C. Langkah Kerja Praktikum</h3>
+
+            <!-- Modul 1 -->
+            <p>
+                <strong>
+                    a) Modul 1 - Pengenalan Widgets Stateless, Stateful, & Manajemen State Dasar
+                </strong>
+            </p>
+
+            <ol>
+                <li>
+                    Buat file dart baru dengan nama main.
+                </li>
+
+                <li>
+                    Import package flutter.
+                </li>
+
+                <li>
+                    Tambahkan fungsi main().
+                    <p>
+                        Fungsi main() ini digunakan untuk menjalankan program flutter.
+                    </p>
+                </li>
+
+                <li>
+                    Tambahkan class MyApp sebagai widget utama aplikasi.
+                    <p>
+                        Pada class ini aplikasi dibuat menggunakan MaterialApp yang berfungsi
+                        sebagai dasar struktur aplikasi Flutter dengan pengaturan judul, tema,
+                        dan halaman awal. Widget MyApp menerapkan class StatelessWidget karena
+                        konfigurasi utama aplikasi tidak ada perubahan setelah aplikasi berjalan.
+                    </p>
+                </li>
+
+                <li>
+                    Tambahkan class DashboardScreen sebagai halaman utama aplikasi.
+                    <p>
+                        Pada class halaman utama menggunakan Scaffold untuk membentuk struktur
+                        dasar aplikasi yang terdiri dari AppBar dan body. Konten utama aplikasi
+                        disusun secara vertikal menggunakan Column dan Padding untuk mengatur
+                        jarak dari tepi layar serta SizedBox untuk memberikan jarak antar-widget.
+                    </p>
+                </li>
+
+                <li>
+                    Tambahkan class GreetingWidget.
+                    <p>
+                        Pada class GreetingWidget menerapkan class StatelessWidget untuk
+                        menampilkan informasi sapaan pengguna yang bersifat statis atau tidak
+                        ada perubahan data setelah aplikasi dijalankan. Struktur utamanya
+                        menggunakan Row untuk menyusun elemen secara horizontal. Di dalamnya
+                        terdapat CircleAvatar yang digunakan untuk menampilkan ikon profil
+                        berbentuk lingkaran, backgroundColor berwarna biru dan
+                        Icon(Icons.person) untuk menampilkan ikon pengguna berwarna putih.
+                        Kemudian Column digunakan untuk menyusun dua teks secara vertikal.
+                    </p>
+                </li>
+
+                <li>
+                    Tambahkan class BalanceCardWidget.
+                    <p>
+                        Class BalanceCardWidget menerapkan StatefulWidget karena tampilan saldo
+                        dapat berubah ketika pengguna melakukan interaksi. Widget ini memiliki
+                        objek state _BalanceCardWidgetState yang digunakan untuk menyimpan dan
+                        mengelola perubahan data pada widget. Variabel _isBalanceVisible digunakan
+                        untuk menentukan apakah saldo sedang ditampilkan atau disembunyikan.
+                        Fungsi _toggleVisibility() digunakan untuk mengubah kondisi tampilan saldo.
+                    </p>
+
+                    <p>
+                        Widget Card digunakan untuk membuat tampilan kartu saldo. Pada bagian atas
+                        card menggunakan Row untuk menempatkan teks "Saldo Utama" dan tombol ikon
+                        mata dalam satu baris, jika saldo terlihat ikon yang digunakan adalah
+                        visibility, sedangkan jika saldo disembunyikan, ikon berubah menjadi
+                        visibility_off, dan ketika tombol ditekan, onPressed: _toggleVisibility
+                        akan menjalankan fungsi _toggleVisibility(). Nominal saldo akan ditampilkan
+                        berdasarkan kondisi pada _isBalanceVisible.
+                    </p>
+                </li>
+
+                <li>
+                    Output program.
+                </li>
+                <img src="/laporan/image/LaporanMobileDua-1.png" class="rounded w-50" alt="LaporanMobileDua-1" />
+            </ol>
+
+            <!-- Modul 2 -->
+            <p>
+                <strong>
+                    b) Modul 2 - Layouting & Styling (Row, Column, Container, dan ListTile)
+                </strong>
+            </p>
+
+            <ol>
+                <li>
+                    Perbarui class DashboardScreen.
+                    <p>
+                        Pada class DashboardScreen menggunakan SingleChildScrollView agar seluruh
+                        isi halaman dapat digulir secara vertikal (scroll) ketika konten lebih
+                        panjang daripada ukuran layar. Lalu, menambahkan ActionButtonsWidget untuk
+                        menampilkan tombol aksi keuangan dan RecentTransactionsWidget untuk
+                        menampilkan daftar transaksi terakhir. SizedBox digunakan untuk memberikan
+                        jarak antar-komponen agar tampilan lebih rapi.
+                    </p>
+                </li>
+
+                <li>
+                    Mengganti ukuran text saldo pada class BalanceCardWidget.
+                    <p>
+                        Ukuran font text yang awalnya 24 diganti menjadi 28 untuk meningkatkan
+                        visibilitas teks.
+                    </p>
+                </li>
+
+                <li>
+                    Menambahkan class ActionButtonsWidget sebagai widget tombol aksi.
+                    <p>
+                        Class ActionButtonsWidget digunakan untuk menampilkan tiga pilihan aksi
+                        keuangan, yaitu Pemasukan, Pengeluaran, dan Transfer. Setiap tombol dibuat
+                        menggunakan fungsi _buildActionButton() sehingga tidak perlu menuliskan
+                        ulang struktur kode berkali-kali. Setiap fungsi menerima tiga parameter
+                        yaitu IconData icon untuk menentukan ikon, String label menentukan teks
+                        tombol, dan Color color untuk menentukan warna ikon dan background untuk
+                        mengatur tampilan setiap tombol.
+                    </p>
+                </li>
+
+                <li>
+                    Menambahkan class RecentTransactionsWidget sebagai widget daftar transaksi
+                    terakhir.
+                    <p>
+                        Menambahkan class RecentTransactionsWidget yang digunakan untuk
+                        menampilkan daftar transaksi terakhir. Widget menggunakan Column agar
+                        judul dan daftar transaksi disusun secara vertikal, widget diberi judul
+                        "Transaksi Terakhir". Card digunakan sebagai wadah untuk seluruh daftar
+                        transaksi agar setiap daftar transaksi memiliki bentuk panel dan efek
+                        bayangan.
+                    </p>
+
+                    <p>
+                        Di dalam Card digunakan Column untuk menyusun beberapa transaksi secara
+                        vertikal. Untuk setiap transaksi disusun menggunakan ListTile dengan
+                        beberapa bagian yaitu leading untuk ikon transaksi, title untuk nama
+                        transaksi, subtitle untuk tanggal transaksi, dan trailing untuk nominal
+                        transaksi.
+                    </p>
+                </li>
+
+                <li>
+                    Output program.
+                </li>
+                <img src="/laporan/image/LaporanMobileDua-2.png" class="rounded w-50" alt="LaporanMobileDua-2" />
+            </ol>
+
+            <!-- Tugas -->
+            <h3 class="mt-4">D. Tugas</h3>
+
+            <!-- Tugas Modul 1 -->
+            <p>
+                <strong>a) Tugas Modul 1</strong>
+            </p>
+
+            <ol>
+                <li>
+                    Ubah warna tema BalanceCard dari biru (Colors.blueAccent) menjadi hijau
+                    emerald (Colors.teal).
+                    <p>
+                        Card widget yang sebelumnya berwarna biru diganti menjadi warna teal,
+                        sehingga tampilan card saldo menjadi teal.
+                    </p>
+                    <img src="/laporan/image/LaporanMobileDua-5.png" class="rounded w-50" alt="LaporanMobileDua-5" />
+                </li>
+
+                <li>
+                    Tambahkan teks statis berupa "No. Rekening: 1234-5678" di bagian bawah
+                    nominal saldo di dalam kartu.
+                    <p>
+                        Menambahkan widget text untuk menampilkan informasi nomor rekening
+                        dibawah text nominal saldo.
+                    </p>
+                    <img src="/laporan/image/LaporanMobileDua-6.png" class="rounded w-50" alt="LaporanMobileDua-6" />
+                </li>
+
+                <li>
+                    Output program.
+                </li>
+                <img src="/laporan/image/LaporanMobileDua-3.png" class="rounded w-50" alt="LaporanMobileDua-3" />
+            </ol>
+
+            <!-- Tugas Modul 2 -->
+            <p>
+                <strong>b) Tugas Modul 2</strong>
+            </p>
+
+            <ol>
+                <li>
+                    Pada widget Daftar Transaksi (ListTile), ubah warna trailing text pengeluaran
+                    menjadi merah dan text pemasukan menjadi hijau.
+                    <p>
+                        Mengganti warna teks untuk setiap transaksi pengeluaran menjadi warna
+                        merah, sedangkan untuk setiap transaksi pemasukan menjadi warna hijau.
+                        Namun sebenarnya pada kode program awal sudah menerapkan hal ini.
+                    </p>
+                    <img src="/laporan/image/LaporanMobileDua-7.png" class="rounded w-50" alt="LaporanMobileDua-7" />
+                </li>
+
+                <li>
+                    Tambahkan 2 transaksi fiktif baru ke dalam daftar "Transaksi Terakhir" di
+                    bawah kode yang sudah ada.
+                    <p>
+                        Menambahkan 2 tambahan transaksi terakhir yaitu Bonus Performa sebagai
+                        pemasukan sebesar 1.500.000 dan Belanja Bulanan sebagai pengeluaran
+                        sebesar 500.000.
+                    </p>
+                    <img src="/laporan/image/LaporanMobileDua-8.png" class="rounded w-50" alt="LaporanMobileDua-8" />
+                </li>
+
+                <li>
+                    Output program.
+                </li>
+                <img src="/laporan/image/LaporanMobileDua-4.png" class="rounded w-50" alt="LaporanMobileDua-4" />
+            </ol>
+
+            <!-- Kesimpulan -->
+            <h3 class="mt-4">E. Kesimpulan</h3>
+
+            <p>
+                Berdasarkan praktikum yang telah dilakukan, dapat dipahami bahwa Flutter
+                menggunakan konsep widget sebagai komponen dasar untuk membentuk struktur,
+                tampilan, dan interaksi pada aplikasi. Praktikum ini menerapkan penggunaan
+                StatelessWidget dan StatefulWidget, serta widget Row, Column, Padding, SizedBox,
+                Container, Card, dan ListTile untuk mengatur tata letak dan tampilan aplikasi.
+                Selain itu, manajemen state diterapkan pada kartu saldo sehingga nominal saldo
+                dapat ditampilkan atau disembunyikan berdasarkan interaksi pengguna. Melalui
+                praktikum ini juga diterapkan layouting dan styling pada aplikasi Expense Tracker,
+                seperti deretan tombol aksi, daftar transaksi, perubahan warna kartu saldo, serta
+                pembedaan warna transaksi pemasukan dan pengeluaran.
+            </p>
+
+            <!-- Repository Github -->
+            <h3 class="mt-4">F. Repository Github</h3>
+
+            <p>
+                Repository project ini dapat diakses melalui link berikut:<br />
+                <a
+                    href="https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005"
+                    target="_blank"
+                >
+                    https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005
+                </a>
+            </p>
+
+            <!-- Kembali -->
+            <div class="text-center">
+                <a href="../blog.html" class="btn rounded-pill w-50 mt-3">
+                    Kembali
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
