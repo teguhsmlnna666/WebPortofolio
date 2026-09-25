@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum - Teguh Esa Maulanna</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="../Style.css" />
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="card p-4 shadow rounded-4">
+
+            <h1 class="fw-bold mb-3">
+                Laporan Praktikum Aplikasi Mobile - Pekan 3
+            </h1>
+            <p class="text-secondary">
+                Input Widgets & Forms
+            </p>
+            <hr />
+
+            <!-- Pendahuluan -->
+            <h3>A. Pendahuluan</h3>
+
+            <p>
+                Flutter merupakan framework open-source yang digunakan untuk mengembangkan
+                aplikasi multiplatform dengan menggunakan bahasa pemrograman Dart. Dalam
+                pengembangan antarmuka aplikasi Flutter, seluruh elemen tampilan dibangun
+                menggunakan konsep widget. Form merupakan widget yang digunakan untuk
+                mengelompokkan beberapa komponen input dalam satu kesatuan sehingga proses
+                pengelolaan dan validasi data dapat dilakukan dengan lebih terstruktur.
+            </p>
+
+            <p>
+                Salah satu widget yang dapat digunakan di dalam Form adalah TextFormField,
+                yang berfungsi untuk menerima input berupa teks maupun angka dari pengguna.
+                TextEditingController digunakan untuk mengontrol dan mengambil nilai yang
+                dimasukkan pada TextFormField. Selain itu, DropdownButtonFormField dapat
+                digunakan untuk menyediakan pilihan data dalam bentuk dropdown, sedangkan
+                ElevatedButton dapat digunakan untuk menjalankan suatu proses setelah
+                pengguna mengisi form.
+            </p>
+
+            <p>
+                Dalam pengolahan input, validasi diperlukan untuk memastikan data yang
+                diberikan pengguna sesuai dengan ketentuan yang telah ditentukan. Flutter
+                menyediakan properti validator pada widget form untuk memeriksa nilai input,
+                misalnya memastikan data tidak kosong atau memastikan nominal berupa angka
+                yang valid. Pengelolaan perubahan data pada widget juga dapat dilakukan
+                menggunakan StatefulWidget dan setState(), terutama ketika terdapat data
+                yang berubah akibat interaksi pengguna.
+            </p>
+
+            <!-- Tujuan -->
+            <h3>B. Tujuan</h3>
+
+            <ol>
+                <li>
+                    Memahami dan menerapkan pengambilan teks dari pengguna menggunakan
+                    controller.
+                </li>
+                <li>
+                    Memahami dan menerapkan widget dropdown statis.
+                </li>
+                <li>
+                    Memahami dan menerapkan validasi input untuk mencegah data kosong
+                    atau format yang salah.
+                </li>
+            </ol>
+
+            <!-- Langkah Kerja -->
+            <h3>C. Langkah Kerja Praktikum</h3>
+
+            <!-- Add Transaction Screen -->
+            <p>
+                <strong>
+                    a) Class add_transaction_screen.dart
+                </strong>
+            </p>
+
+            <ol>
+                <li>
+                    Buat file dart baru dengan nama <strong>add_transaction_screen.dart</strong>.
+                </li>
+
+                <li>
+                    Tambahkan Widget Utama Form Transaksi.
+                    <p>
+                        Class <strong>AddTransactionScreen</strong> digunakan sebagai halaman
+                        untuk menambahkan transaksi baru. Class ini menerapkan
+                        <strong>StatefulWidget</strong> karena terdapat data yang dapat berubah
+                        berdasarkan interaksi pengguna, seperti pilihan kategori pada dropdown.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-1.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan class <strong>AddTransactionScreenState</strong>.
+                    <p>
+                        Class <strong>AddTransactionScreenState</strong> digunakan untuk
+                        mengelola state dan data yang terdapat pada halaman form transaksi.
+                        Pada class ini dibuat <strong>GlobalKey&lt;FormState&gt;</strong> dengan
+                        nama <strong>_formKey</strong> yang digunakan untuk mengontrol form dan
+                        menjalankan proses validasi.
+                    </p>
+
+                    <p>
+                        Selain itu, digunakan <strong>TextEditingController</strong> untuk
+                        mengambil nilai yang dimasukkan pengguna pada input judul transaksi
+                        dan nominal transaksi. State untuk dropdown disimpan pada variabel
+                        <strong>_selectedCategory</strong>, sedangkan daftar pilihan kategori
+                        disimpan pada variabel <strong>_categories</strong>.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-2.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan method <strong>dispose()</strong>.
+                    <p>
+                        Method <strong>dispose()</strong> digunakan untuk membersihkan
+                        controller ketika halaman ditutup. Controller yang digunakan pada
+                        form harus dihentikan menggunakan method <strong>dispose()</strong>
+                        agar resource yang digunakan tidak terus tersimpan dan dapat
+                        mencegah terjadinya memory leak.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-3.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan method <strong>build()</strong> dan struktur halaman.
+                    <p>
+                        Method <strong>build()</strong> digunakan untuk membangun tampilan
+                        halaman form transaksi. Widget <strong>Scaffold</strong> digunakan
+                        sebagai struktur dasar halaman yang terdiri dari AppBar dan body.
+                        AppBar digunakan untuk menampilkan judul "Catat Transaksi Baru".
+                    </p>
+
+                    <p>
+                        Bagian body menggunakan <strong>SingleChildScrollView</strong> agar
+                        seluruh isi form dapat digulir ketika ukuran konten lebih panjang
+                        daripada ukuran layar, terutama ketika keyboard muncul. Di dalamnya
+                        terdapat widget <strong>Form</strong> yang menggunakan
+                        <strong>_formKey</strong> sebagai key untuk proses validasi.
+                    </p>
+
+                    <p>
+                        Widget <strong>Column</strong> digunakan untuk menyusun seluruh
+                        komponen input secara vertikal, sedangkan
+                        <strong>crossAxisAlignment: CrossAxisAlignment.stretch</strong>
+                        digunakan agar komponen memenuhi lebar yang tersedia.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-4png.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan input <strong>Judul Transaksi</strong>.
+                    <p>
+                        Input judul transaksi menggunakan widget
+                        <strong>TextFormField</strong>. Nilai input dikontrol menggunakan
+                        <strong>_titleController</strong>. Input dilengkapi dengan
+                        <strong>InputDecoration</strong> berupa label "Judul Transaksi",
+                        OutlineInputBorder, dan ikon title.
+                    </p>
+
+                    <p>
+                        Properti <strong>validator</strong> digunakan untuk memastikan bahwa
+                        judul transaksi tidak kosong. Apabila pengguna tidak memasukkan
+                        judul transaksi, sistem akan menampilkan pesan
+                        "Judul transaksi tidak boleh kosong".
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-5.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan input <strong>Nominal Transaksi</strong>.
+                    <p>
+                        Input nominal transaksi juga menggunakan
+                        <strong>TextFormField</strong> dengan controller
+                        <strong>_amountController</strong>. Properti
+                        <strong>keyboardType: TextInputType.number</strong> digunakan agar
+                        keyboard yang ditampilkan kepada pengguna berupa keyboard angka.
+                    </p>
+
+                    <p>
+                        Validasi dilakukan untuk memastikan nominal tidak kosong dan harus
+                        berupa angka bulat yang valid. Fungsi <strong>int.tryParse()</strong>
+                        digunakan untuk memeriksa apakah nilai yang dimasukkan dapat
+                        dikonversi menjadi bilangan bulat.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-6.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan <strong>DropdownButtonFormField</strong> untuk kategori transaksi.
+                    <p>
+                        Widget <strong>DropdownButtonFormField</strong> digunakan untuk
+                        memberikan pilihan kategori transaksi kepada pengguna. Kategori
+                        yang tersedia terdiri dari Makanan, Transportasi, Hiburan, dan
+                        Lainnya. Nilai awal yang dipilih adalah kategori "Makanan".
+                    </p>
+
+                    <p>
+                        Setiap kategori dibuat menjadi <strong>DropdownMenuItem</strong>
+                        menggunakan fungsi <strong>map()</strong>. Ketika pengguna memilih
+                        kategori baru, method <strong>setState()</strong> digunakan untuk
+                        memperbarui nilai <strong>_selectedCategory</strong>.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-7.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan tombol <strong>Simpan Transaksi</strong>.
+                    <p>
+                        Tombol simpan menggunakan widget <strong>ElevatedButton</strong>.
+                        Tombol diberi warna deep purple dan teks berwarna putih. Ketika
+                        tombol ditekan, program menjalankan proses validasi menggunakan
+                        <strong>_formKey.currentState!.validate()</strong>.
+                    </p>
+
+                    <p>
+                        Jika seluruh input telah memenuhi aturan validasi, sistem akan
+                        menampilkan <strong>SnackBar</strong> yang berisi informasi transaksi
+                        yang berhasil disimpan, yaitu judul transaksi dan nominal transaksi.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-8.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+
+            <!-- Main Dart -->
+            <p>
+                <strong>
+                    b) Class main.dart
+                </strong>
+            </p>
+
+            <ol>
+                <li>
+                    Buat file <strong>main.dart</strong>.
+                </li>
+
+                <li>
+                    Import package Flutter dan file form input.
+                    <p>
+                        Package <strong>flutter/material.dart</strong> digunakan untuk
+                        menyediakan komponen Material Design pada aplikasi Flutter.
+                        Selain itu, file <strong>add_transaction_screen.dart</strong>
+                        di-import agar class <strong>AddTransactionScreen</strong> dapat
+                        digunakan sebagai halaman utama aplikasi.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-9.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan fungsi <strong>main()</strong>.
+                    <p>
+                        Fungsi <strong>main()</strong> merupakan titik awal eksekusi aplikasi
+                        Flutter. Fungsi ini menggunakan <strong>runApp()</strong> untuk
+                        menjalankan widget utama aplikasi, yaitu <strong>MyApp</strong>.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-10.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Tambahkan class <strong>MyApp</strong>.
+                    <p>
+                        Class <strong>MyApp</strong> merupakan widget utama aplikasi dan
+                        menerapkan <strong>StatelessWidget</strong>. Widget ini digunakan
+                        untuk mengatur konfigurasi utama aplikasi yang tidak membutuhkan
+                        perubahan state.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-11.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+                <li>
+                    Output program.
+                </li>
+
+                <img
+                    src="/laporan/image/mobileTiga-12.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-1"
+                />
+            </ol>
+
+            <!-- Tugas -->
+            <h3 class="mt-4">D. Tugas</h3>
+
+            <p>
+                <strong>
+                    Menambahkan Input Tanggal Transaksi sebelum tombol Simpan.
+                </strong>
+            </p>
+
+            <ol>
+                <li>
+                    Tambahkan <strong>_dateController</strong>.
+                    <p>
+                        Ditambahkan <strong>TextEditingController</strong> dengan nama
+                        <strong>_dateController</strong>. Controller ini digunakan untuk
+                        mengambil dan menyimpan tanggal yang dipilih pengguna serta
+                        menampilkan hasil tanggal tersebut pada TextFormField.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-13.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-13"
+                />
+                <li>
+                    Tambahkan input <strong>Tanggal Transaksi</strong> sebelum tombol Simpan.
+                    <p>
+                        Input tanggal menggunakan widget <strong>TextFormField</strong>
+                        dengan controller <strong>_dateController</strong>. Properti
+                        <strong>readOnly: true</strong> digunakan agar pengguna tidak
+                        memasukkan tanggal secara manual melalui keyboard.
+                    </p>
+
+                    <p>
+                        Input dilengkapi dengan label "Tanggal Transaksi", garis tepi
+                        menggunakan <strong>OutlineInputBorder</strong>, dan ikon kalender
+                        menggunakan <strong>Icons.calendar_today</strong>.
+                    </p>
+                </li>
+                
+                <li>
+                    Tambahkan fungsi <strong>showDatePicker()</strong>.
+                    <p>
+                        Ketika input tanggal ditekan, fungsi <strong>showDatePicker()</strong>
+                        dijalankan untuk menampilkan kalender kepada pengguna. Tanggal awal
+                        menggunakan tanggal saat ini melalui <strong>DateTime.now()</strong>,
+                        sedangkan tanggal yang dapat dipilih dibatasi mulai tahun 2000 hingga
+                        tahun 2100.
+                    </p>
+                </li>
+                
+                <li>
+                    Tampilkan tanggal yang telah dipilih.
+                    <p>
+                        Setelah pengguna memilih tanggal, program memeriksa apakah nilai
+                        <strong>pickedDate</strong> tidak bernilai null. Jika tanggal telah
+                        dipilih, nilai tanggal dimasukkan ke dalam
+                        <strong>_dateController.text</strong> dengan format
+                        <strong>DD/MM/YYYY</strong>.
+                    </p>
+
+                    <p>
+                        Method <strong>setState()</strong> digunakan agar perubahan data
+                        tanggal dapat diperbarui pada tampilan aplikasi.
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-14.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-14"
+                />
+                <li>
+                    Tambahkan validasi tanggal.
+                    <p>
+                        Validasi pada input tanggal digunakan untuk memastikan pengguna
+                        telah memilih tanggal transaksi. Jika input tanggal masih kosong,
+                        sistem akan menampilkan pesan "Tanggal transaksi wajib diisi".
+                    </p>
+                </li>
+                <img
+                    src="/laporan/image/mobileTiga-15.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-15"
+                />
+
+                <li>
+                    Output program.
+                </li>
+
+                <img
+                    src="/laporan/image/mobileTiga-16.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-16"
+                />
+                <img
+                    src="/laporan/image/mobileTiga-17.png"
+                    class="rounded w-50"
+                    alt="LaporanMobileTiga-17"
+                />
+            </ol>
+
+            <!-- Kesimpulan -->
+            <h3 class="mt-4">E. Kesimpulan</h3>
+
+            <p>
+                Berdasarkan praktikum yang telah dilakukan, dapat dipahami bahwa Form
+                digunakan untuk mengelompokkan beberapa komponen input dalam satu kesatuan
+                sehingga proses pengelolaan dan validasi data dapat dilakukan dengan lebih
+                terstruktur. Praktikum ini menerapkan TextFormField, TextEditingController,
+                DropdownButtonFormField, dan ElevatedButton untuk menerima dan mengelola
+                data transaksi. Selain itu, validasi input digunakan untuk mencegah data
+                kosong atau format yang salah. Pada tugas tambahan juga diterapkan
+                showDatePicker() untuk memilih tanggal transaksi sehingga pengguna dapat
+                memasukkan data tanggal melalui kalender secara lebih terstruktur.
+            </p>
+
+            <!-- Repository Github -->
+            <h3 class="mt-4">F. Repository Github</h3>
+
+            <p>
+                Repository project ini dapat diakses melalui link berikut:<br />
+
+                <a
+                    href="https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005/tree/praktikum-3"
+                    target="_blank"
+                >
+                    https://github.com/teguhsmlnna666/PrakAppMob_B_2411532005/tree/praktikum-3
+                </a>
+            </p>
+
+            <!-- Kembali -->
+            <div class="text-center">
+                <a href="../blog.html" class="btn rounded-pill w-50 mt-3">
+                    Kembali
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
