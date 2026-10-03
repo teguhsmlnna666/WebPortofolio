@@ -1,0 +1,23 @@
+# React / Vite
+portfolio-teguh/node_modules/
+portfolio-teguh/dist/
+portfolio-teguh/.env
+portfolio-teguh/.env.*
+
+# Laravel
+portfolio-backend/vendor/
+portfolio-backend/node_modules/
+portfolio-backend/.env
+
+# Laravel generated files
+portfolio-backend/storage/logs/*
+portfolio-backend/storage/framework/cache/*
+portfolio-backend/storage/framework/sessions/*
+portfolio-backend/storage/framework/views/*
+portfolio-backend/bootstrap/cache/*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
