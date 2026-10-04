@@ -5,6 +5,7 @@
     teguh-app.zip   -> backend Laravel + vendor (tanpa dev), .env production
     web-root.zip    -> hasil build React + index.php Laravel + .htaccess
     uploads.zip     -> gambar upload yang sudah ada (opsional)
+    vendor.zip      -> hanya folder vendor (tanpa .env), untuk memperbarui dependensi PHP di server
 
   Pemakaian (PowerShell, dari folder repo):
     powershell -ExecutionPolicy Bypass -File deploy\build-deploy.ps1
@@ -129,10 +130,13 @@ Step 'Buat zip'
 New-Zip $StageApp (Join-Path $Out 'teguh-app.zip') 'teguh-app'
 New-Zip $StageWeb (Join-Path $Out 'web-root.zip')
 New-Zip $StageUp  (Join-Path $Out 'uploads.zip')
+# Hanya folder vendor (tanpa .env): untuk memperbarui dependensi PHP di server lewat File Manager
+# saat composer.lock berubah. vendor tidak ikut di-upload otomatis oleh GitHub Actions (terlalu lambat lewat FTP).
+New-Zip (Join-Path $StageApp 'vendor') (Join-Path $Out 'vendor.zip') 'teguh-app/vendor'
 
 # 9. Verifikasi isi zip -------------------------------------------------------
 Step 'Verifikasi zip'
-foreach ($z in 'teguh-app.zip', 'web-root.zip', 'uploads.zip') {
+foreach ($z in 'teguh-app.zip', 'web-root.zip', 'uploads.zip', 'vendor.zip') {
     $zp = Join-Path $Out $z
     $zip = [System.IO.Compression.ZipFile]::OpenRead($zp)
     try {

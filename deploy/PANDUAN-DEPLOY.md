@@ -39,6 +39,7 @@ Susunan folder tiap akun bisa sedikit berbeda. `teguh-app` boleh berada:
 | `teguh-app.zip` | Backend Laravel lengkap (sudah termasuk `vendor`) dan `.env` production |
 | `web-root.zip` | Hasil build React, `index.php` Laravel, dan `.htaccess` |
 | `uploads.zip` | Gambar upload yang sudah ada (opsional) |
+| `vendor.zip` | Hanya folder `vendor` (tanpa `.env`), untuk memperbarui dependensi PHP nanti |
 | `database-import.sql` | **Database dengan data asli** (report, project, akun admin), dibuat dari export phpMyAdmin |
 | `schema-kosong.sql` | Alternatif: struktur database kosong (tanpa data) |
 | `admin.sql` | Alternatif: akun admin untuk database kosong (lihat "Menyiapkan paket") |
@@ -120,7 +121,9 @@ Setelah setup sekali di bawah, Teguh cukup `git push` ke `main`: GitHub Actions 
 Laravel, lalu meng-upload lewat FTP. Tidak perlu lewat pemilik hosting dan tidak perlu terminal.
 Workflow-nya: `.github/workflows/deploy_teguhsmln.yml` (langkah build: `deploy/ci-build.sh`).
 
-**Yang di-upload:** kode frontend dan backend (termasuk `vendor`).
+**Yang di-upload:** kode frontend dan backend (sekitar 66 file backend + 20 file frontend, 9 MB). Folder **`vendor`
+tidak ikut**: ~6.000 file kecil lewat FTPS terbukti timeout setelah 54 menit (`Timeout (data socket)`).
+`vendor` sudah ada di server dan hanya berubah kalau dependensi PHP berubah (lihat "Memperbarui vendor").
 **Tidak disentuh:** `teguh-app/.env`, `teguh-app/storage/` (log), folder `storage/` (gambar upload),
 dan database. Action hanya menghapus file yang dulu ia upload sendiri.
 **Konten** (report, project) tetap diubah lewat panel admin di situs live. Push kode tidak mengubah database.
@@ -156,9 +159,9 @@ dan password-nya. Akun lama yang dipakai workflow lama juga boleh, selama folder
 | Variable (opsional) | `FTP_PROTOCOL` | `ftp` jika `ftps` (default) gagal tersambung |
 | Variable (opsional) | `SITE_URL` | jika alamat situs berubah |
 
-Bawaan `FTP_WEB_DIR=./teguhsmln/` dan `FTP_APP_DIR=./teguhsmln/teguh-app/`: cocok untuk akun yang
-akarnya `public_html` (seperti workflow lama). Kalau akar akun FTP-nya **folder subdomain itu sendiri**,
-isi `FTP_WEB_DIR=./` dan `FTP_APP_DIR=./teguh-app/`.
+Bawaan di workflow: `FTP_WEB_DIR=./` dan `FTP_APP_DIR=./teguh-app/`, cocok untuk akun FTP yang akarnya
+**folder subdomain itu sendiri** (dibuat dengan Directory = folder subdomain). Kalau akar akun FTP-nya
+`public_html`, isi `FTP_WEB_DIR=./teguhsmln/` dan `FTP_APP_DIR=./teguhsmln/teguh-app/`.
 
 **4. Tes dulu dengan simulasi (dry-run), baru deploy sungguhan.** Push ke `main` adalah deploy
 **sungguhan** ke situs yang live, jadi tes dulu lewat pull request:
@@ -170,10 +173,11 @@ isi `FTP_WEB_DIR=./` dan `FTP_APP_DIR=./teguh-app/`.
    "Kalau deploy gagal" di bawah.
 4. **Merge** PR: itu men-trigger deploy **sungguhan**.
 
-Dry-run **tidak** membuktikan bahwa folder tujuannya benar. Cek manual: kalau di folder subdomain
-(`teguhsmln/`) ada file `.ftp-deploy-sync-state.json` dari workflow lama, berarti akun FTP dan
-`FTP_WEB_DIR=./teguhsmln/` memang menunjuk ke web root. Kalau tidak ada, cocokkan dengan kolom
-**Directory** di hPanel → FTP Accounts.
+Dry-run **tidak** membuktikan bahwa folder tujuannya benar, dan tidak menguji pembuatan folder atau
+pengiriman file (itu hanya terjadi di deploy sungguhan). Yang diuji hanya build dan login FTP. Cocokkan
+`FTP_WEB_DIR` / `FTP_APP_DIR` dengan kolom **Directory** di hPanel → FTP Accounts. Bukti paling kuat bahwa
+deploy mendarat di folder yang benar: setelah deploy sungguhan, `/.ftp-deploy-sync-state.json` di situs
+berubah menjadi **403**.
 
 Mau tes tanpa PR? **Actions → Deploy to Hostinger → Run workflow** (kolom `dry_run` aktif secara bawaan).
 Tombol ini baru muncul setelah workflow ada di branch `main`. Sebelum itu, pakai cara PR di atas.
@@ -181,8 +185,12 @@ Tombol ini baru muncul setelah workflow ada di branch `main`. Sebelum itu, pakai
 > Pull request dari **fork** tidak menerima secrets, jadi langkah FTP dilewati dan hanya build yang
 > diperiksa. Dry-run FTP penuh butuh branch di repo yang sama (akses kolaborator).
 
-**5. Merge ke `main`, lalu pantau di tab Actions.** **Deploy pertama lambat** (10–30 menit):
-`vendor` berisi sekitar 6.000 file. Deploy berikutnya hanya mengirim file yang berubah.
+**5. Merge ke `main`, lalu pantau di tab Actions.** Deploy pertama mengirim semua file (tanpa `vendor`),
+beberapa menit saja; deploy berikutnya hanya file yang berubah. **Jangan dibatalkan di tengah jalan**:
+file yang sedang ditulis saat itu bisa terpotong (deploy berikutnya memperbaikinya).
+
+> **Re-run memakai workflow versi lama.** "Re-run all jobs" menjalankan lagi workflow **dari commit run
+> itu**. Kalau Anda memperbaiki file workflow, **push commit baru**, jangan Re-run.
 
 **6. Cek setelah deploy pertama:**
 - `/api/projects` tetap menampilkan JSON dan situs normal.
@@ -197,6 +205,17 @@ otomatis sebelum merge.
 **Sebelum `git pull` di laptop Teguh:** commit atau `git stash` dulu perubahan lokal yang belum
 disimpan, supaya tidak bentrok dengan file yang diubah di update ini.
 
+### Memperbarui `vendor` (jarang: hanya kalau dependensi PHP berubah)
+Workflow memberi **peringatan** (tab Summary dan anotasi run) kalau `composer.json` / `composer.lock`
+berubah dalam sebuah push. Saat itu `vendor` di server harus diperbarui manual, dan ini butuh akses hPanel:
+1. Di laptop, jalankan `deploy\build-deploy.ps1`; hasilnya `deploy-output\vendor.zip`.
+2. File Manager → buka folder subdomain (tempat `teguh-app` berada) → **Upload** `vendor.zip` → **Extract**
+   → pilih **overwrite**. Isinya hanya `teguh-app/vendor/...`, jadi `.env` **tidak** tertimpa.
+3. Hapus `vendor.zip` dari server.
+
+Jangan memakai opsi `include_vendor` di Run workflow kecuali terpaksa: itu mengunggah ~6.000 file lewat FTP
+dan sudah terbukti timeout setelah 54 menit.
+
 ### Kalau ada migrasi database baru
 Server tidak punya terminal, jadi migrasi **tidak jalan otomatis**. Pilih salah satu:
 - Kirim SQL perubahannya ke pemilik hosting untuk diimpor lewat phpMyAdmin, atau
@@ -210,7 +229,8 @@ Server tidak punya terminal, jadi migrasi **tidak jalan otomatis**. Pilih salah 
 | Pesan di log Actions | Penyebab / solusi |
 |---|---|
 | `530 Login incorrect` / `530 Login authentication failed` | `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_SERVER` salah atau sudah kedaluwarsa (akun/password FTP diubah, atau menunjuk server lama). Isi secrets **tidak bisa dilihat di GitHub, hanya bisa ditimpa**: buat akun FTP baru di hPanel, lalu isi ulang ketiganya. Setelah itu uji dengan **Run workflow** (`dry_run` aktif): simulasi ini sudah menguji login. |
-| Timeout, `ECONNREFUSED`, atau error TLS | Set variable `FTP_PROTOCOL` = `ftp`. |
+| Timeout, `ECONNREFUSED`, atau error TLS saat **menyambung** | Set variable `FTP_PROTOCOL` = `ftp`. |
+| `Timeout (data socket)` setelah berjalan lama | Terlalu banyak file kecil lewat FTPS. Biasanya `vendor` ikut terunggah (workflow lama, atau `include_vendor` aktif). Pakai workflow terbaru yang melewati `vendor`, lalu **push commit baru**. |
 | `550` / `No such directory` | `FTP_WEB_DIR` / `FTP_APP_DIR` tidak sesuai akar akun FTP (lihat tabel di atas). |
 | `GAGAL: ...` dari langkah Build | Pesannya menjelaskan sendiri (mis. build frontend gagal). Perbaiki lalu push lagi. |
 
@@ -220,13 +240,14 @@ Server tidak punya terminal, jadi migrasi **tidak jalan otomatis**. Pilih salah 
   Extract dan pilih **overwrite**. Folder `storage` (gambar upload) tidak ikut tertimpa.
 - **Ubah backend:** upload `teguh-app.zip` baru dan Extract (overwrite), **lalu cek `.env`**
   karena ikut tertimpa. Simpan salinan `.env` yang sudah terisi sebelum overwrite.
+- **Hanya dependensi PHP yang berubah:** pakai `vendor.zip` (tidak menimpa `.env`).
 
 ## Menyiapkan paket (di laptop, oleh yang membantu setup)
 
 Butuh Laragon (PHP 8.3 + MySQL) dan Node. Dari folder repo, di PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File deploy\build-deploy.ps1        # 3 file zip
+powershell -ExecutionPolicy Bypass -File deploy\build-deploy.ps1        # 4 file zip
 ```
 
 Database, pilih **salah satu**:

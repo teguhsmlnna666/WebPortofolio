@@ -19,6 +19,10 @@ on:
         description: 'Simulasi saja, tidak mengubah apa pun di server'
         type: boolean
         default: true
+      include_vendor:
+        description: 'Ikut unggah folder vendor (~6.000 file). SANGAT LAMBAT lewat FTP (pernah timeout setelah 54 menit); lebih baik perbarui vendor manual lewat vendor.zip'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -31,7 +35,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 60   # upload pertama (vendor ~6000 file) bisa lama; berikutnya hanya file yang berubah
+    timeout-minutes: 60   # batas pengaman. Deploy normal (tanpa vendor) hanya beberapa menit
     env:
       SITE_URL: ${{ vars.SITE_URL || 'https://teguhsmln.ifportofolio.com' }}
       # Deploy sungguhan hanya untuk push ke main/master, atau dijalankan manual dengan dry_run = false.
@@ -64,12 +68,32 @@ jobs:
       - name: Build (frontend + backend)
         run: bash deploy/ci-build.sh
 
+      # Peringatan: kalau composer.lock/composer.json berubah, vendor di server harus diperbarui manual
+      # (vendor tidak ikut di-upload otomatis, lihat catatan di bawah).
+      - name: Cek perubahan dependensi PHP
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          BEFORE="${{ github.event.before }}"
+          CHANGED=""
+          if [ -n "$BEFORE" ] && ! echo "$BEFORE" | grep -qE '^0+$' && git fetch --depth=1 origin "$BEFORE" 2>/dev/null; then
+            CHANGED=$(git diff --name-only FETCH_HEAD HEAD -- portfolio-backend/composer.lock portfolio-backend/composer.json || true)
+          fi
+          if [ -n "$CHANGED" ]; then
+            echo "::warning::Dependensi PHP berubah ($CHANGED). Folder vendor di server TIDAK ikut ter-update otomatis: perbarui manual lewat vendor.zip (lihat deploy/PANDUAN-DEPLOY.md)."
+            echo "### PERHATIAN: dependensi PHP berubah, vendor di server perlu diperbarui manual" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       # Backend dulu: API baru biasanya kompatibel dengan frontend lama, kebalikannya belum tentu.
       # File .env, storage/ (log, cache) dan gambar upload di server TIDAK disentuh: action ini hanya
       # menghapus file yang sebelumnya ia upload sendiri (dicatat di .ftp-deploy-sync-state.json).
       # Pull request dari fork tidak menerima secrets, jadi langkah FTP dilewati (build tetap diperiksa).
-      - name: Upload backend (teguh-app)
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+      #
+      # vendor/ TIDAK ikut di-upload (bawaan): ~6.000 file kecil lewat FTPS butuh satu koneksi data TLS per file
+      # dan terbukti timeout setelah 54 menit ("Timeout (data socket)"). vendor sudah ada di server dan hanya
+      # berubah kalau dependensi PHP berubah; saat itu pakai vendor.zip (hasil deploy/build-deploy.ps1)
+      # lewat File Manager.
+      - name: Upload backend (teguh-app, tanpa vendor)
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.include_vendor) && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -79,6 +103,26 @@ jobs:
           local-dir: build/teguh-app/
           server-dir: ${{ vars.FTP_APP_DIR || './teguh-app/' }}
           dangerous-clean-slate: false
+          timeout: 60000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            vendor/**
+          dry-run: ${{ env.DRY_RUN == 'true' }}
+
+      - name: Upload backend (teguh-app, DENGAN vendor, lambat)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_vendor }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          local-dir: build/teguh-app/
+          server-dir: ${{ vars.FTP_APP_DIR || './teguh-app/' }}
+          dangerous-clean-slate: false
+          timeout: 120000
           dry-run: ${{ env.DRY_RUN == 'true' }}
 
       - name: Upload frontend (web root)
@@ -92,4 +136,5 @@ jobs:
           local-dir: build/web-root/
           server-dir: ${{ vars.FTP_WEB_DIR || './' }}
           dangerous-clean-slate: false
+          timeout: 60000
           dry-run: ${{ env.DRY_RUN == 'true' }}
