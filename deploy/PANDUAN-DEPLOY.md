@@ -209,7 +209,7 @@ Server tidak punya terminal, jadi migrasi **tidak jalan otomatis**. Pilih salah 
 
 | Pesan di log Actions | Penyebab / solusi |
 |---|---|
-| `530 Login authentication failed` | `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_SERVER` salah. |
+| `530 Login incorrect` / `530 Login authentication failed` | `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_SERVER` salah atau sudah kedaluwarsa (akun/password FTP diubah, atau menunjuk server lama). Isi secrets **tidak bisa dilihat di GitHub, hanya bisa ditimpa**: buat akun FTP baru di hPanel, lalu isi ulang ketiganya. Setelah itu uji dengan **Run workflow** (`dry_run` aktif): simulasi ini sudah menguji login. |
 | Timeout, `ECONNREFUSED`, atau error TLS | Set variable `FTP_PROTOCOL` = `ftp`. |
 | `550` / `No such directory` | `FTP_WEB_DIR` / `FTP_APP_DIR` tidak sesuai akar akun FTP (lihat tabel di atas). |
 | `GAGAL: ...` dari langkah Build | Pesannya menjelaskan sendiri (mis. build frontend gagal). Perbaiki lalu push lagi. |

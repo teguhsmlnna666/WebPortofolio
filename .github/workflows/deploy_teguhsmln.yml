@@ -77,7 +77,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
           local-dir: build/teguh-app/
-          server-dir: ${{ vars.FTP_APP_DIR || './teguhsmln/teguh-app/' }}
+          server-dir: ${{ vars.FTP_APP_DIR || './teguh-app/' }}
           dangerous-clean-slate: false
           dry-run: ${{ env.DRY_RUN == 'true' }}
 
@@ -90,6 +90,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
           local-dir: build/web-root/
-          server-dir: ${{ vars.FTP_WEB_DIR || './teguhsmln/' }}
+          server-dir: ${{ vars.FTP_WEB_DIR || './' }}
           dangerous-clean-slate: false
           dry-run: ${{ env.DRY_RUN == 'true' }}
