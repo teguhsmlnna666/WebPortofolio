@@ -148,7 +148,9 @@ Di File Manager (aktifkan **Show hidden files** dulu):
 **Directory = folder subdomain**, jangan memberikan akun utama hosting. Catat hostname, username,
 dan password-nya. Akun lama yang dipakai workflow lama juga boleh, selama folder subdomain bisa dijangkau.
 
-**3. Isi pengaturan di repo GitHub** (Settings → Secrets and variables → Actions):
+**3. Isi pengaturan di repo GitHub** (Settings → Secrets and variables → Actions). Perhatikan tab-nya:
+tiga baris pertama di tab **Secrets**, sisanya di tab **Variables**. Workflow membaca variabel lewat
+`vars.*`, jadi nilai yang salah dimasukkan ke tab Secrets **diam-diam diabaikan**:
 
 | Jenis | Nama | Isi |
 |---|---|---|
@@ -156,7 +158,7 @@ dan password-nya. Akun lama yang dipakai workflow lama juga boleh, selama folder
 | Secret | `FTP_USERNAME`, `FTP_PASSWORD` | dari akun FTP |
 | Variable (opsional) | `FTP_WEB_DIR` | folder web di server, relatif terhadap akar akun FTP |
 | Variable (opsional) | `FTP_APP_DIR` | folder `teguh-app` di server, relatif terhadap akar akun FTP |
-| Variable (opsional) | `FTP_PROTOCOL` | `ftp` jika `ftps` (default) gagal tersambung |
+| Variable (opsional) | `FTP_PROTOCOL` | `ftp` jika `ftps` (default) gagal **tersambung**. Jangan diisi kalau tidak perlu: FTP biasa mengirim password tanpa enkripsi |
 | Variable (opsional) | `SITE_URL` | jika alamat situs berubah |
 
 Bawaan di workflow: `FTP_WEB_DIR=./` dan `FTP_APP_DIR=./teguh-app/`, cocok untuk akun FTP yang akarnya
@@ -230,6 +232,7 @@ Server tidak punya terminal, jadi migrasi **tidak jalan otomatis**. Pilih salah 
 |---|---|
 | `530 Login incorrect` / `530 Login authentication failed` | `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_SERVER` salah atau sudah kedaluwarsa (akun/password FTP diubah, atau menunjuk server lama). Isi secrets **tidak bisa dilihat di GitHub, hanya bisa ditimpa**: buat akun FTP baru di hPanel, lalu isi ulang ketiganya. Setelah itu uji dengan **Run workflow** (`dry_run` aktif): simulasi ini sudah menguji login. |
 | Timeout, `ECONNREFUSED`, atau error TLS saat **menyambung** | Set variable `FTP_PROTOCOL` = `ftp`. |
+| `425 Unable to build data connection: Operation not permitted` (log menampilkan `uploading "...keep"` sebelum error) | Server FTP ini menolak upload **file 0 byte** lewat FTPS. File `.keep` buatan `deploy/ci-build.sh` sekarang berisi satu baris baru, dan build memberi peringatan kalau ada file kosong lain. Kalau error ini muncul di file lain, cek apakah file itu kosong. |
 | `Timeout (data socket)` setelah berjalan lama | Terlalu banyak file kecil lewat FTPS. Biasanya `vendor` ikut terunggah (workflow lama, atau `include_vendor` aktif). Pakai workflow terbaru yang melewati `vendor`, lalu **push commit baru**. |
 | `550` / `No such directory` | `FTP_WEB_DIR` / `FTP_APP_DIR` tidak sesuai akar akun FTP (lihat tabel di atas). |
 | `GAGAL: ...` dari langkah Build | Pesannya menjelaskan sendiri (mis. build frontend gagal). Perbaiki lalu push lagi. |

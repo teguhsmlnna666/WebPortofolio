@@ -35,10 +35,12 @@ tar -C portfolio-backend \
   --exclude=.env --exclude='.env.*' --exclude=database.sqlite --exclude='*.log' \
   -cf - . | tar -C "$OUT/teguh-app" -xf -
 
+# .keep TIDAK boleh kosong (0 byte): server FTP hosting menolak upload file kosong lewat FTPS
+# ("425 Unable to build data connection: Operation not permitted"), jadi diisi satu baris baru.
 for d in bootstrap/cache storage/app/private storage/framework/cache/data \
          storage/framework/sessions storage/framework/views storage/logs; do
   mkdir -p "$OUT/teguh-app/$d"
-  : > "$OUT/teguh-app/$d/.keep"
+  printf '\n' > "$OUT/teguh-app/$d/.keep"
 done
 printf 'Require all denied\n' > "$OUT/teguh-app/.htaccess"
 
@@ -55,5 +57,13 @@ if grep -rqs "127.0.0.1" "$OUT/web-root/assets"; then
   echo "GAGAL: hasil build frontend masih memuat 127.0.0.1 (VITE_API_URL tidak terpakai?)"; exit 1
 fi
 grep -rqs "$SITE_URL/api" "$OUT/web-root/assets" || { echo "GAGAL: URL API production tidak tertanam di frontend"; exit 1; }
+
+# File 0 byte gagal diunggah lewat FTPS ke server ini (lihat catatan .keep di atas). Hanya peringatan:
+# vendor/ tidak ikut diunggah, jadi tidak diperiksa.
+EMPTY=$(find "$OUT/web-root" "$OUT/teguh-app" -path "$OUT/teguh-app/vendor" -prune -o -type f -size 0 -print)
+if [ -n "$EMPTY" ]; then
+  echo "::warning::Ada file 0 byte yang akan diunggah lewat FTP dan bisa gagal (425 ...): isi file-file ini atau hapus dulu."
+  echo "$EMPTY"
+fi
 
 echo "OK: $OUT/web-root dan $OUT/teguh-app siap di-upload"
