@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ThemeToggle from "../../components/layout/ThemeToggle";
 import Toast from "../../components/ui/Toast";
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AdminLogin() {
   const navigate = useNavigate();

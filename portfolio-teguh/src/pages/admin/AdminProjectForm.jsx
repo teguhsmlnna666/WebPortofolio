@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Image as ImageIcon, LogOut, Moon, Sun, Upload, X } from "lucide-react";
 
-const API_URL = "http://127.0.0.1:8000/api";
-const STORAGE_URL = "http://127.0.0.1:8000/storage";
+const API_URL = import.meta.env.VITE_API_URL;
+const STORAGE_URL = import.meta.env.VITE_STORAGE_URL;
 
 function AdminProjectForm() {
   const navigate = useNavigate();

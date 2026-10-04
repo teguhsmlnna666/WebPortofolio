@@ -1,0 +1,2 @@
+# Skrip shell harus selalu LF, kalau tidak gagal dijalankan di server CI (Linux).
+*.sh text eol=lf

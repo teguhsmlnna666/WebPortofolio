@@ -1,0 +1,27 @@
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Teruskan header Authorization ke PHP (dibutuhkan token Sanctum)
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Backend Laravel boleh berada di dalam folder ini (teguh-app/), tapi tidak boleh
+    # pernah disajikan lewat browser (berisi .env dan source). Hasilnya 403.
+    RewriteRule ^teguh-app(/|$) - [F,L]
+
+    # File state FTP-Deploy (GitHub Actions) berisi daftar file di server
+    RewriteRule ^\.ftp-deploy-sync-state\.json$ - [F,L]
+
+    # /api/* ditangani Laravel (index.php hasil salinan folder public/ backend)
+    RewriteRule ^api/ index.php [L]
+
+    # File / folder yang ada (assets, images, storage, dll) disajikan apa adanya
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Selain itu: biarkan React Router yang menangani (SPA fallback)
+    RewriteRule ^ index.html [L]
+</IfModule>

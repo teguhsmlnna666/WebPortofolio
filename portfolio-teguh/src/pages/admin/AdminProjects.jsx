@@ -5,7 +5,7 @@ import { ArrowLeft, LogOut, Moon, Sun, Plus, Pencil, Trash2 } from "lucide-react
 import Toast from "../../components/ui/Toast";
 import ConfirmDialog from "../../components/ui/ConfirmDialog";
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AdminProjects() {
   const navigate = useNavigate();

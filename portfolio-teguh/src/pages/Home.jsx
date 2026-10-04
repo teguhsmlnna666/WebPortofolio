@@ -23,6 +23,9 @@ import Footer from "../components/ui/Footer";
 import Toast from "../components/ui/Toast";
 import { gallery } from "../data/gallery";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const STORAGE_URL = import.meta.env.VITE_STORAGE_URL;
+
 const skills = [
   {
     icon: Code2,
@@ -123,7 +126,7 @@ export default function Home() {
     setContactToast(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/contact", {
+      const response = await fetch(`${API_URL}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +162,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/projects");
+        const response = await fetch(`${API_URL}/projects`);
 
         if (!response.ok) {
           throw new Error("Gagal mengambil data project.");
@@ -182,7 +185,7 @@ export default function Home() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/reports");
+        const response = await fetch(`${API_URL}/reports`);
 
         if (!response.ok) {
           throw new Error("Gagal mengambil data laporan.");
@@ -575,7 +578,7 @@ export default function Home() {
                     <img
                       src={
                         project.cover_image
-                          ? `http://127.0.0.1:8000/storage/${project.cover_image}`
+                          ? `${STORAGE_URL}/${project.cover_image}`
                           : "/images/project-placeholder.png"
                       }
                       alt={project.title}

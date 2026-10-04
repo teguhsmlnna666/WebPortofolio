@@ -1,23 +1,95 @@
-name: Deploy to Subdomain
+name: Deploy to Hostinger
+
+# Setiap push ke main: build frontend + backend di GitHub, lalu upload lewat FTP.
+# Tidak butuh terminal di server. Panduan setup: deploy/PANDUAN-DEPLOY.md (bagian "Update otomatis").
 
 on:
   push:
     branches:
       - main
       - master
+  # Pull request: build + login FTP + daftar file yang akan dikirim, TANPA mengubah apa pun di server (dry-run).
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Simulasi saja, tidak mengubah apa pun di server'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# Jangan jalankan dua deploy bersamaan (upload FTP yang saling menimpa).
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 60   # upload pertama (vendor ~6000 file) bisa lama; berikutnya hanya file yang berubah
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://teguhsmln.ifportofolio.com' }}
+      # Deploy sungguhan hanya untuk push ke main/master, atau dijalankan manual dengan dry_run = false.
+      DRY_RUN: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
     steps:
-      - name: 🚚 Get latest code
+      - name: Mode
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "### SIMULASI (dry-run): server tidak diubah" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### DEPLOY SUNGGUHAN ke $SITE_URL" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Get latest code
         uses: actions/checkout@v4
 
-      - name: 📂 Sync files
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio-teguh/package-lock.json
+
+      - name: Setup PHP + Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Build (frontend + backend)
+        run: bash deploy/ci-build.sh
+
+      # Backend dulu: API baru biasanya kompatibel dengan frontend lama, kebalikannya belum tentu.
+      # File .env, storage/ (log, cache) dan gambar upload di server TIDAK disentuh: action ini hanya
+      # menghapus file yang sebelumnya ia upload sendiri (dicatat di .ftp-deploy-sync-state.json).
+      # Pull request dari fork tidak menerima secrets, jadi langkah FTP dilewati (build tetap diperiksa).
+      - name: Upload backend (teguh-app)
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./teguhsmln/
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          local-dir: build/teguh-app/
+          server-dir: ${{ vars.FTP_APP_DIR || './teguhsmln/teguh-app/' }}
           dangerous-clean-slate: false
+          dry-run: ${{ env.DRY_RUN == 'true' }}
+
+      - name: Upload frontend (web root)
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          local-dir: build/web-root/
+          server-dir: ${{ vars.FTP_WEB_DIR || './teguhsmln/' }}
+          dangerous-clean-slate: false
+          dry-run: ${{ env.DRY_RUN == 'true' }}

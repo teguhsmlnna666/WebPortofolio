@@ -40,7 +40,11 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // Di shared hosting tanpa terminal symlink "storage" tidak bisa dibuat,
+            // jadi upload ditulis langsung ke <web-root>/storage (lihat deploy/).
+            'root' => env('PUBLIC_DISK_IN_WEBROOT', false)
+                ? public_path('storage')
+                : storage_path('app/public'),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,

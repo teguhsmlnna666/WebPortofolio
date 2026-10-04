@@ -139,6 +139,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // Contact form
 Route::post('/contact', [MessageController::class, 'store']);
 
-// Messages
-Route::get('/messages', [MessageController::class, 'index']);
-Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
+// Messages (hanya admin, berisi data pengunjung)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/messages', [MessageController::class, 'index']);
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
+});

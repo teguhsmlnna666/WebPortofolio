@@ -3,6 +3,12 @@ portfolio-teguh/node_modules/
 portfolio-teguh/dist/
 portfolio-teguh/.env
 portfolio-teguh/.env.*
+# Dua file ini hanya berisi alamat API (bukan rahasia) dan dibutuhkan agar npm run dev / build jalan
+!portfolio-teguh/.env.development
+!portfolio-teguh/.env.production
+
+# Dump database di root: berisi hash password admin dan pesan pengunjung, jangan di-commit
+/*.sql
 
 # Laravel
 portfolio-backend/vendor/

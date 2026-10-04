@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, FileText, FolderKanban, Image, LogOut, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function AdminDashboard() {
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ function AdminDashboard() {
     try {
       const token = localStorage.getItem("admin_token");
 
-      await fetch("http://127.0.0.1:8000/api/logout", {
+      await fetch(`${API_URL}/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

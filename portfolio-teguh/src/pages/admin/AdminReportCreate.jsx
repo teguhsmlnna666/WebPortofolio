@@ -4,7 +4,7 @@ import { ArrowLeft, Check, Image as ImageIcon, LogOut, Moon, Sun, Upload, X } fr
 
 import Toast from "../../components/ui/Toast";
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AdminReportCreate() {
   const navigate = useNavigate();
